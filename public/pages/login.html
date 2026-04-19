@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 
+        META CONFIGURATION
+        - Ensures proper encoding, responsive layout, and browser compatibility.
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Author" content="GreenField Local Hub Services">
+    <meta name="description" content="This is the Official page for GLH service Login">
+
+    <title>Login - GreenField Local Hub</title>
+
+    <!-- GLOBAL AUTH STYLES -->
+    <link rel="stylesheet" href="../static/styles/auth.css">
+
+    <!-- ICON LIBRARY -->
+    <link rel="stylesheet" href="../static/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+</head>
+
+<body>
+    <!-- AUTH PAGE WRAPPER -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <h2 class="auth-heading">Login</h2>
+
+            <!-- 
+                LOGIN FORM
+                - Uses semantic structure for accessibility.
+                - Browser handles basic validation (required, email format).
+            -->
+            <form class="auth-form">
+
+                <!-- EMAIL FIELD -->
+                <div class="input-field">
+                    <label for="email">Email</label>
+                    <input 
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="on"
+                        required
+                    >
+                </div>
+
+                <!-- PASSWORD FIELD -->
+                <div class="input-field">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        minlength="12"
+                        maxlength="16"
+                        required
+                    >
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <button class="btn-primary auth-submit">Sign In</button>
+
+                <!-- SWITCH TO REGISTER PAGE -->
+                <p class="auth-switch">
+                    Don't have an account? 
+                    <a href="./register.html">Register</a>
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- 
+        LOGIN.JS
+        - Handles login request to FastAPI backend.
+        - Saves JWT token and redirects user after successful authentication.
+        AUTH.JS
+        - Handes Authentication of Login data through body and headers
+        - Loads User data sent to be use din Frontend
+        RESPONSIVE.JS
+        - Handles design and layout of login page
+        - Connects login and auth scripting for better user idnetification on system
+    -->
+    <script type="module" src="../static/js/settings_sync.js" defer></script>
+    <script type="module" src="../static/js/login.js" defer></script>
+    <script type="module" src="../static//js/auth.js" defer></script>
+    <script type="module" src="../static/js/responsive.js" defer></script>
+</body>
+</html>

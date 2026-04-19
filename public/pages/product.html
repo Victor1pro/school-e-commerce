@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Author" content="GreenField Local Hub Services">
+    <meta name="description" content="This is Your product Page">
+    <title>Product - GreenField Local Hub</title>
+
+    <!-- || LINK TO STYLESHEET || -->
+    <link rel="stylesheet" href="../static/styles/product.css">
+</head>
+<body>
+    <main id="product-page" class="product-page">
+        <figure class="product-media">
+            <img id="product-image" src="" alt="">
+            <figcaption id="product-caption" class="visually-hidden"></figcaption>
+        </figure>
+
+        <div class="product-details">
+            <h1 id="product-name"></h1>
+            <p id="product-description"></p>
+            <p class="product-price" id="product-price"></p>
+
+            <div class="qty-row">
+                <label for="qty">Quantity</label>
+                <div class="qty-controls">
+                    <button id="qty-dec">−</button>
+                    <input type="number" id="qty" value="1" min="1">
+                    <button id="qty-inc">+</button>
+                </div>
+            </div>
+
+            <button class="add-to-cart-btn" id="add-to-cart-btn">
+                Add to Cart
+            </button>
+        </div>
+    </main>
+
+    <!-- || LINK TO SCRIPTS || -->
+    <script type="module" src="../static/js/settings_sync.js" defer></script>
+    <script type="module" src="../static/js/responsive.js" defer></script>
+    <script type="module" src="../static//js/product.js"></script>
+
+</body>
+</html>

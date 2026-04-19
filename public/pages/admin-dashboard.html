@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../static/styles/dashboard.css">
+  <link rel="stylesheet" href="../static/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+
+  <title>Dashboard - GreenField Local Hub</title>
+</head>
+<body>
+
+  <!-- FLOATING GLASS SIDEBAR -->
+  <aside class="gf-sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <i class="la la-leaf logo"></i>
+      <span>GreenField</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active"><i class="la la-home"></i> Dashboard</a>
+      <a class="nav-item"><i class="la la-shopping-bag"></i> Orders</a>
+      <a class="nav-item"><i class="la la-cogs"></i> Services</a>
+      <a class="nav-item"><i class="la la-users"></i> Customers</a>
+      <a class="nav-item"><i class="la la-chart-line"></i> Analytics</a>
+      <a class="nav-item"><i class="la la-user-cog"></i> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a class="nav-item logout"><i class="la la-sign-out-alt"></i> Logout</a>
+    </div>
+  </aside>
+
+  <!-- TOPBAR -->
+  <header class="gf-topbar">
+    <button id="menu-btn" class="menu-btn"><i class="la la-bars"></i></button>
+
+    <div class="topbar-search">
+      <i class="la la-search"></i>
+      <input type="text" placeholder="Search…">
+    </div>
+
+    <div class="topbar-actions">
+      <i class="la la-bell"></i>
+      <img src="https://i.pravatar.cc/40" class="avatar">
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="gf-content container">
+
+    <h1 class="page-title">Dashboard Overview</h1>
+
+    <!-- GRID OF CARDS -->
+    <section class="gf-grid">
+
+      <div class="gf-card-solid stat-card">
+        <h3>Orders Today</h3>
+        <p class="stat-number">42</p>
+      </div>
+
+      <div class="gf-card-solid stat-card">
+        <h3>Active Jobs</h3>
+        <p class="stat-number">17</p>
+      </div>
+
+      <div class="gf-card-solid stat-card">
+        <h3>New Customers</h3>
+        <p class="stat-number">9</p>
+      </div>
+
+      <div class="gf-card-solid stat-card">
+        <h3>Revenue</h3>
+        <p class="stat-number">£1,284</p>
+      </div>
+
+    </section>
+
+    <!-- CHARTS / TABLES -->
+    <section class="gf-grid">
+      <div class="gf-card-solid large-card">
+        <h2>Revenue Chart</h2>
+        <canvas id="revenueChart"></canvas>
+      </div>
+
+      <div class="gf-card-solid large-card">
+        <h2>Recent Orders</h2>
+        <table class="gf-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#1023</td>
+              <td>Sarah M.</td>
+              <td><span class="badge success">Completed</span></td>
+              <td>£39.99</td>
+            </tr>
+            <tr>
+              <td>#1024</td>
+              <td>James K.</td>
+              <td><span class="badge pending">Pending</span></td>
+              <td>£24.50</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="../static/js/dashboard.js"></script>
+</body>
+</html>

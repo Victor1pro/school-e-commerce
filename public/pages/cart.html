@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Author" content="GreenField Local Hub Services">
+    <meta name="description" content="This your cart Page">
+    <title>Cart - Greenfield Local Hub</title>
+
+    <!-- || LINK TO STYLESHEET || -->
+    <link rel="stylesheet" href="../static/styles/cart.css">
+
+    <!-- || LINK TO -->
+</head>
+<body>
+    <main class="cart-page">
+
+        <h1 class="cart-title">Your Cart</h1>
+
+        <!-- CART ITEMS -->
+        <section class="cart-items" id="cart-items">
+            <!-- JS will inject rows here -->
+        </section>
+
+        <!-- CART SUMMARY -->
+        <aside class="cart-summary" id="cart-summary">
+            <h2>Order Summary</h2>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">£0.00</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span class="muted">Calculated at checkout</span>
+            </div>
+
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </aside>
+    </main>
+
+    <!-- || SCRIPT || -->
+    <script type="module" src="../static/js/cart.js"></script>
+</body>
+</html>

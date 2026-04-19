@@ -1,0 +1,233 @@
+@import './base.css';
+
+
+/* || CSS RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* || BASE STYLES */
+body {
+    font-family: var(--font-main);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: var(--line-normal);
+    padding-bottom: var(--space-xl);
+}
+
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+button {
+    font-family: inherit;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    line-height: var(--line-tight);
+    color: var(--color-text);
+}
+
+
+/* ============================================================
+   ACCESSIBILITY HELPERS
+============================================================ */
+.visually-hidden {
+  position: absolute;
+  left: -100px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   LAYOUT — MOBILE FIRST
+============================================================ */
+.product-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  padding: var(--space-xl) var(--space-md);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .product-page {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+
+/* ============================================================
+   LEFT SIDE — PRODUCT IMAGE (Glassmorphic Card)
+============================================================ */
+.product-media {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px) saturate(180%);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .product-media {
+    background: rgba(20, 20, 20, 0.55);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.product-media img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.4s ease, transform 0.6s ease;
+}
+
+.product-media img.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.product-media figcaption {
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--role-text-muted);
+}
+
+
+/* ============================================================
+   RIGHT SIDE — PRODUCT DETAILS
+============================================================ */
+.product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px) saturate(180%);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .product-details {
+    background: rgba(20, 20, 20, 0.55);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.product-details h1 {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--role-text-main);
+}
+
+.product-details p {
+  font-size: var(--text-base);
+  color: var(--role-text-main);
+}
+
+.product-price {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-primary);
+}
+
+
+/* ============================================================
+   QUANTITY SELECTOR
+============================================================ */
+.qty-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.qty-controls button {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--role-border-default);
+  background: var(--role-surface-card);
+  font-size: var(--text-lg);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.qty-controls button:hover {
+  background: var(--color-primary-light);
+  color: white;
+}
+
+.qty-controls input {
+  width: 60px;
+  padding: var(--space-xs);
+  text-align: center;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--role-border-default);
+  background: var(--role-surface-card);
+  color: var(--role-text-main);
+}
+
+
+/* ============================================================
+   ADD TO CART BUTTON (Matches checkout/cart)
+============================================================ */
+.add-to-cart-btn {
+  width: 100%;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  transition: var(--transition-smooth);
+}
+
+.add-to-cart-btn:hover {
+  background: var(--color-primary-dark);
+}

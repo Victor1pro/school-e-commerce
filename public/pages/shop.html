@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="Author" content="GreenField Local Hub Services">
+        <meta name="description" content="This is the Official site of GreenField Local Hub Services (GLH)">
+
+        <!-- || LINK TO STYLESHEETS || -->
+        <link rel="stylesheet" href="../static/styles/shop.css">
+
+        <!-- || LINK TO LINE AWESOME ICONS || -->
+        <link rel="stylesheet" href="../static/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+        
+        <title>Home - GreenField Local Hub</title>
+    </head>
+
+    <body>
+
+        <!-- || HEADER NAVIGATION || -->
+        <header class="site-header">
+
+            <!-- ROW 1: LOGO • LOCATION • SEARCH • ORDERS • CART -->
+            <div class="header-primary">
+
+                <!-- LOGO -->
+                <div class="header-logo">
+                    <a href="/" class="logo-link">
+                        <i class="la la-leaf logo-icon"></i>
+                        <span class="logo-text">GreenField Local Hub</span>
+                    </a>
+                </div>
+
+                <!-- LOCATION (hidden on mobile, shown on desktop) -->
+                <div class="header-location">
+                    <i class="la la-map-marker-alt location-icon"></i>
+                    <div class="location-text">
+                        <span class="location-label">Delivering to</span>
+                        <span class="location-value">Hartlepool, UK</span>
+                    </div>
+                </div>
+
+                <!-- SEARCH BAR -->
+                <form class="header-search" role="search" action="/search" method="GET">
+                    <label for="header-search-input" class="visually-hidden">Search products</label>
+
+                    <div class="header-search-wrapper">
+
+                        <!-- CATEGORY SELECT (Amazon-style) -->
+                        <select class="search-category" name="cat">
+                            <option value="all">All</option>
+                            <option value="fruit">Fruit</option>
+                            <option value="veg">Vegetables</option>
+                            <option value="dairy">Dairy</option>
+                            <option value="bakery">Bakery</option>
+                        </select>
+
+                        <input type="text" id="header-search-input" name="q"
+                            placeholder="Search fresh local products..." autocomplete="off">
+
+                        <button type="submit" aria-label="Search">
+                            <i class="la la-search"></i>
+                        </button>
+                    </div>
+
+                    <!-- AUTOCOMPLETE DROPDOWN GOES HERE -->
+                    <div class="search-suggestions"></div>
+                </form>
+
+                <!-- ACTIONS -->
+                <div class="header-actions">
+
+                    <!-- ACCOUNT DROPDOWN -->
+                    <div class="account-dropdown">
+                        <button class="account-trigger">
+                            <i class="la la-user"></i>
+                            <div class="account-text">
+                                <span class="account-top">Hello, <span id="accountName">User</span></span>
+                                <span class="account-bottom">Account & Settings</span>
+                            </div>
+                        </button>
+
+                        <div class="account-menu">
+                            <a href="./register.html" id="accountSignIn">Sign In</a>
+                            <a href="/account">Your Account</a>
+                            <a href="./order-history.html">Your Orders</a>
+                            <a href="./settings.html">Settings</a>
+                            <button id="accountSignOut" class="logout-btn" style="display:none;">Sign Out</button>
+                        </div>
+                    </div>
+
+                    <!-- RETURNS & ORDERS -->
+                    <a href="./order.html" class="orders-link">
+                        <span class="orders-top">Returns</span>
+                        <span class="orders-bottom">&amp; Orders</span>
+                    </a>
+
+                    <!-- CART -->
+                    <a href="./cart.html" class="cart-link">
+                        <span class="cart-icon-wrap">
+                            <i class="la la-shopping-cart"></i>
+                            <span class="cart-badge">0</span>
+                        </span>
+                        <span class="cart-label">Cart</span>
+                    </a>
+
+                    <a href="/notifications" class="notifications-link">
+                        <span class="cart-icon-wrap">
+                            <i class="la la-bell"></i>
+                            <span class="notifications-badge">0</span>
+                        </span>
+                        <span class="notifications-label">Notifications</span>
+                    </a>
+
+
+
+                    <!-- MOBILE MENU BUTTON -->
+                    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- ROW 2: NAVIGATION (DESKTOP ONLY) -->
+            <div class="header-secondary">
+
+                <!-- ALL MENU TRIGGER -->
+                <button class="all-menu-trigger" aria-expanded="false">
+                    <i class="la la-bars"></i>
+                    <span>All</span>
+                </button>
+
+                <!-- APPLE-STYLE LARGE MEGA MENU -->
+                <div class="all-mega-menu mega-large">
+                    <div class="mega-grid">
+
+                        <div class="mega-section">
+                            <h4>Shop by Category</h4>
+                            <ul>
+                                <li><a href="/cat/fruit">Fruit</a></li>
+                                <li><a href="/cat/veg">Vegetables</a></li>
+                                <li><a href="/cat/dairy">Dairy</a></li>
+                                <li><a href="/cat/bakery">Bakery</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="mega-section">
+                            <h4>Fresh Deals</h4>
+                            <ul>
+                                <li><a href="/deals/today">Today’s Deals</a></li>
+                                <li><a href="/deals/weekly">Weekly Offers</a></li>
+                                <li><a href="/deals/seasonal">Seasonal Picks</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="mega-section">
+                            <h4>GreenField Hub</h4>
+                            <ul>
+                                <li><a href="/about">About Us</a></li>
+                                <li><a href="/farmers">Meet Our Farmers</a></li>
+                                <li><a href="/sustainability">Sustainability</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="mega-section">
+                            <h4>Support</h4>
+                            <ul>
+                                <li><a href="/contact">Contact Us</a></li>
+                                <li><a href="/faq">FAQ</a></li>
+                                <li><a href="/help">Help Centre</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- MAIN NAV -->
+                <nav class="header-nav" aria-label="Main navigation">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop">Shop</a></li>
+
+                        <li class="nav-has-submenu">
+                            <ul class="nav-submenu">
+                                <li><a href="/cat/fruit">Fruit</a></li>
+                                <li><a href="/cat/veg">Vegetables</a></li>
+                                <li><a href="/cat/dairy">Dairy</a></li>
+                                <li><a href="/cat/bakery">Bakery</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="./about.html">About</a></li>
+                        <li><a href="./contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- MOBILE DRAWER -->
+        <aside class="mobile-menu" aria-hidden="true">
+
+            <button class="close-menu" aria-label="Close menu">
+                <span class="close-bar"></span>
+                <span class="close-bar"></span>
+            </button>
+
+            <nav aria-label="Mobile navigation">
+                <ul class="mobile-links">
+
+                    <!-- MOBILE ACCOUNT BLOCK -->
+                    <li class="mobile-account-block">
+                        <button class="mobile-account-trigger">
+                            <i class="la la-user"></i>
+                            <div class="mobile-account-text">
+                                <span class="mobile-account-top">Hello, <span id="mobileAccountName">Sign in</span></span>
+                                <span class="mobile-account-bottom">Account & Settings</span>
+                            </div>
+                            <i class="la la-angle-down mobile-account-arrow"></i>
+                        </button>
+
+                        <ul class="mobile-account-menu">
+                            <li><a href="/login" id="mobileSignIn">Sign In</a></li>
+                            <li><a href="/account">Your Account</a></li>
+                            <li><a href="/orders">Your Orders</a></li>
+                            <li><a href="/settings">Settings</a></li>
+                            <li><button id="mobileSignOut" class="logout-btn" style="display:none;">Sign Out</button></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="/"><i class="la la-home"></i> Home</a></li>
+
+                    <li class="has-submenu">
+                        <button class="submenu-toggle" aria-expanded="false">
+                            <span><i class="la la-th-large"></i> Categories</span>
+                            <i class="la la-angle-down submenu-arrow"></i>
+                        </button>
+
+                        <ul class="submenu">
+                            <li><a href="/cat/fruit"><i class="la la-apple"></i> Fruit</a></li>
+                            <li><a href="/cat/veg"><i class="la la-carrot"></i> Vegetables</a></li>
+                            <li><a href="/cat/dairy"><i class="la la-cheese"></i> Dairy</a></li>
+                            <li><a href="/cat/bakery"><i class="la la-bread-slice"></i> Bakery</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="/shop"><i class="la la-store"></i> Shop</a></li>
+                    <li><a href="/about"><i class="la la-info-circle"></i> About</a></li>
+                    <li><a href="/contact"><i class="la la-phone"></i> Contact</a></li>
+
+                    <li>
+                        <a href="/notifications" class="badge-link">
+                            <span class="icon-badge-wrap">
+                                <i class="la la-bell"></i>
+                                <span class="badge">5</span>
+                            </span>
+                            <span class="link-text">Notifications</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/cart" class="badge-link">
+                            <span class="icon-badge-wrap">
+                                <i class="la la-shopping-cart"></i>
+                                <span class="badge">3</span>
+                            </span>
+                            <span class="link-text">Cart</span>
+                        </a>
+                    </li>
+
+                    <li><a href="/account"><i class="la la-user"></i> Account</a></li>
+
+                </ul>
+            </nav>
+        </aside>
+
+
+        <!-- OVERLAY -->
+        <div class="menu-overlay"></div>
+
+
+        <aside class="filter-sidebar">
+            <h3>Filters</h3>
+
+            <!-- CATEGORY FILTERS -->
+            <div class="filter-group">
+                <h4>Categories</h4>
+
+                <label class="switch-row">
+                    <span>Fruit</span>
+                    <input type="checkbox" value="fruit" class="filter-category">
+                    <span class="switch"></span>
+                </label>
+
+                <label class="switch-row">
+                    <span>Vegetables</span>
+                    <input type="checkbox" value="vegetables" class="filter-category">
+                    <span class="switch"></span>
+                </label>
+
+                <label class="switch-row">
+                    <span>Dairy</span>
+                    <input type="checkbox" value="dairy" class="filter-category">
+                    <span class="switch"></span>
+                </label>
+
+                <label class="switch-row">
+                    <span>Bakery</span>
+                    <input type="checkbox" value="bakery" class="filter-category">
+                    <span class="switch"></span>
+                </label>
+
+                <label class="switch-row">
+                    <span>Drinks</span>
+                    <input type="checkbox" value="drinks" class="filter-category">
+                    <span class="switch"></span>
+                </label>
+            </div>
+
+            <!-- PRICE FILTERS -->
+            <div class="filter-group">
+                <h4>Price</h4>
+
+                <label class="switch-row">
+                    <span>£0 – £5</span>
+                    <input type="checkbox" value="0-5" class="filter-price">
+                    <span class="switch"></span>
+                </label>
+
+                <label class="switch-row">
+                    <span>£5 – £10</span>
+                    <input type="checkbox" value="5-10" class="filter-price">
+                    <span class="switch"></span>
+                </label>
+
+                <label class="switch-row">
+                    <span>£10 – £20</span>
+                    <input type="checkbox" value="10-20" class="filter-price">
+                    <span class="switch"></span>
+                </label>
+            </div>
+        </aside>
+
+        <!-- || PRODUCT GRID || -->
+        <section id="product-grid" class="product-grid">
+            
+        </section>
+
+        <div id="cart-toast" class="cart-toast"></div>
+
+
+
+        <!-- || FOOTER NAVIGATION || -->
+        <footer class="footer">
+
+            <!-- BACK TO TOP -->
+            <button class="back-to-top" aria-label="Back to top">
+                <i class="la la-angle-up"></i>
+            </button>
+
+            <!-- TOP BRAND ROW -->
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <i class="la la-leaf"></i>
+                    <span class="logo-name">GreenField Local Hub</span>
+                </div>
+
+                <div class="footer-social">
+                    <a href="#"><i class="la la-facebook"></i></a>
+                    <a href="#"><i class="la la-twitter"></i></a>
+                    <a href="#"><i class="la la-instagram"></i></a>
+                    <a href="#"><i class="la la-linkedin"></i></a>
+                    <a href="#"><i class="la la-youtube"></i></a>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- MAIN GRID -->
+            <div class="footer-columns">
+
+                <!-- COMPANY -->
+                <div class="footer-box" data-collapse>
+                    <div class="footer-heading">
+                        <i class="la la-building footer-heading-icon"></i>
+                        <h3>Company</h3>
+                        <i class="la la-angle-down footer-collapse-arrow"></i>
+                    </div>
+                    <span class="heading-bar"></span>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="./contact.html">Contact us</a></li>
+                        <li><a href="./about.html">About us</a></li>
+                        <li><a href="">Get started</a></li>
+                    </ul>
+                </div>
+
+                <!-- SERVICE -->
+                <div class="footer-box" data-collapse>
+                    <div class="footer-heading">
+                        <i class="la la-cogs footer-heading-icon"></i>
+                        <h3>Service</h3>
+                        <i class="la la-angle-down footer-collapse-arrow"></i>
+                    </div>
+                    <span class="heading-bar"></span>
+                    <ul>
+                        <li><a href="">Orders & Returns</a></li>
+                        <li><a href="">Shipping</a></li>
+                        <li><a href="">Support</a></li>
+                        <li><a href="">FAQs</a></li>
+                    </ul>
+                </div>
+
+                <!-- ACCOUNT -->
+                <div class="footer-box" data-collapse>
+                    <div class="footer-heading">
+                        <i class="la la-user footer-heading-icon"></i>
+                        <h3>Account</h3>
+                        <i class="la la-angle-down footer-collapse-arrow"></i>
+                    </div>
+                    <span class="heading-bar"></span>
+                    <ul>
+                        <li><a href="">Profile</a></li>
+                        <li><a href="">My Account</a></li>
+                        <li><a href="">Preferences</a></li>
+                        <li><a href="">Purchases</a></li>
+                    </ul>
+                </div>
+
+                <!-- NEWSLETTER -->
+                <div class="footer-box newsletter" data-collapse>
+                    <div class="footer-heading">
+                        <i class="la la-envelope footer-heading-icon"></i>
+                        <h3>Newsletter</h3>
+                        <i class="la la-angle-down footer-collapse-arrow"></i>
+                    </div>
+                    <span class="heading-bar"></span>
+                    <p>Subscribe for updates and local offers.</p>
+                    <form>
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- LEGAL ROW -->
+            <div class="footer-legal">
+                <p>© 2026 GreenField Local Hub. All rights reserved.</p>
+
+                <div class="legal-links">
+                    <a href="">Privacy Policy</a>
+                    <a href="">Terms & Conditions</a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- IMPORT JAVASCRIPT FILE -->
+        <script type="module" src="../static/js/product.js" defer></script>
+        <script type="module" src="../static/js/auth.js"></script>
+        <script type="module" src="../static/js/responsive.js" defer></script>
+        <script type="module" src="../static/js/search-filter.js" defer></script>
+
+        <script type="module" src="../static/js/cart.js" defer></script>
+        <script type="module" src="../static/js/order.js" defer></script>
+
+    </body>
+</html>

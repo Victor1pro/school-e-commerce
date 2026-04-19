@@ -1,0 +1,86 @@
+/* || IMPORT BASE STYLES */
+@import './base.css';
+
+
+/* ============================================================
+       PAGE LAYOUT
+    ============================================================ */
+body {
+    background: var(--role-page-bg);
+    font-family: var(--font-main);
+    padding: var(--space-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.thankyou-card {
+    background: var(--role-surface-card);
+    border: 1px solid var(--role-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-medium);
+    animation: popIn 0.45s ease;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================================
+    ICON
+============================================================ */
+.thankyou-icon {
+    font-size: 4rem;
+    color: var(--color-success);
+    margin-bottom: var(--space-lg);
+    text-shadow: 0 4px 12px rgba(76, 175, 80, 0.35);
+}
+
+/* ============================================================
+    TEXT
+============================================================ */
+.thankyou-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--role-text-main);
+    margin-bottom: var(--space-md);
+}
+
+.thankyou-message {
+    font-size: var(--text-base);
+    color: var(--role-text-muted);
+    line-height: var(--line-normal);
+    margin-bottom: var(--space-xl);
+}
+
+/* ============================================================
+    BUTTON
+============================================================ */
+.thankyou-btn {
+    display: inline-block;
+    padding: var(--space-md) var(--space-xl);
+    background: var(--role-primary-bg);
+    color: var(--role-primary-text);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    transition: background var(--transition-smooth), transform var(--transition-fast);
+}
+
+.thankyou-btn:hover {
+    background: var(--role-primary-bg-hover);
+    transform: translateY(-2px);
+}
+
+.thankyou-btn:active {
+    background: var(--role-primary-bg-active);
+    transform: translateY(0);
+}

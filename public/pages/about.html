@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="Author" content="GreenField Local Hub Services">
+        <meta name="description" content="This page provide information on GreenField Local Hub Services">
+        <title>About - GreenField Local Hub</title>
+
+        <!-- || LINK TO STYLESHEETS || -->
+        <link rel="stylesheet" href="../static/styles/about.css">
+
+        <!-- || LINK TO ICONS LOADERS -->
+        <link rel="stylesheet" href="../static/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+    </head>
+
+    <body>
+        <header class="site-header">
+
+            <!-- ROW 1: PRIMARY BAR -->
+            <div class="header-primary">
+
+                <!-- LEFT: LOGO -->
+                <div class="header-logo">
+                    <a href="/" class="logo-link">
+                        <i class="la la-leaf logo-icon"></i>
+                        <span class="logo-text">GreenField Local Hub</span>
+                    </a>
+                </div>
+
+                <!-- LOCATION / DELIVER TO -->
+                <div class="header-location">
+                    <i class="la la-map-marker-alt location-icon"></i>
+                    <div class="location-text">
+                        <span class="location-label">Delivering to</span>
+                        <span class="location-value">Hartlepool, UK</span>
+                    </div>
+                </div>
+
+                <!-- SEARCH BAR (DESKTOP) -->
+                <form class="header-search" role="search" aria-label="Search products" action="/search" method="GET">
+                    <label for="header-search-input" class="visually-hidden">Search products</label>
+                    <div class="header-search-wrapper">
+                        <input type="text" id="header-search-input" name="q" placeholder="Search fresh local products..." autocomplete="off">
+                        <button type="submit" aria-label="Search">
+                            <i class="la la-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- RIGHT: ACCOUNT / ORDERS / CART -->
+                <div class="header-actions">
+
+                    <!-- ACCOUNT (AMAZON STYLE) -->
+                    <div class="account-block" aria-haspopup="true">
+                        <button class="account-trigger" aria-expanded="false">
+                            <i class="la la-user account-icon"></i>
+                            <span class="account-text">
+                                <span class="account-line-top">Hello, Sign in</span>
+                                <span class="account-line-bottom">Account &amp; Lists</span>
+                            </span>
+                        </button>
+
+                        <!-- ACCOUNT DROPDOWN -->
+                        <div class="account-dropdown" aria-label="Account menu">
+                            <div class="account-dropdown-inner">
+                                <a href="/login" class="account-signin-btn">Sign in</a>
+                                <div class="account-section">
+                                    <h4>Your Account</h4>
+                                    <ul>
+                                        <li><a href="/orders">Your Orders</a></li>
+                                        <li><a href="/account">Account Settings</a></li>
+                                        <li><a href="/wishlist">Your Wishlist</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ORDERS -->
+                    <a href="/orders" class="orders-link">
+                        <span class="orders-top">Returns</span>
+                        <span class="orders-bottom">&amp; Orders</span>
+                    </a>
+
+                    <!-- CART -->
+                    <a href="/cart" class="cart-link">
+                        <span class="cart-icon-wrap">
+                            <i class="la la-shopping-cart"></i>
+                            <span class="cart-badge">3</span>
+                        </span>
+                        <span class="cart-label">Cart</span>
+                    </a>
+
+                    <!-- MOBILE MENU BUTTON -->
+                    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- ROW 2: SECONDARY NAV -->
+            <div class="header-secondary">
+
+                <!-- ALL MENU (DESKTOP MEGA + MOBILE DRAWER TRIGGER) -->
+                <button class="all-menu-trigger" aria-expanded="false">
+                    <i class="la la-bars"></i>
+                    <span>All</span>
+                </button>
+
+                <!-- DESKTOP MEGA MENU -->
+                <div class="all-mega-menu">
+                    <div class="all-mega-inner">
+                        <div class="mega-column">
+                            <h4>Shop by Category</h4>
+                            <ul>
+                                <li><a href="/cat/fruit">Fruit</a></li>
+                                <li><a href="/cat/veg">Vegetables</a></li>
+                                <li><a href="/cat/dairy">Dairy</a></li>
+                                <li><a href="/cat/bakery">Bakery</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-column">
+                            <h4>Quick Links</h4>
+                            <ul>
+                                <li><a href="/shop">All Products</a></li>
+                                <li><a href="/about">About GreenField</a></li>
+                                <li><a href="/contact">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAIN NAV LINKS -->
+                <nav class="header-nav" aria-label="Main navigation">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop">Shop</a></li>
+
+                        <li class="nav-has-submenu">
+                            <button class="nav-submenu-trigger" aria-expanded="false">
+                                Categories <i class="la la-angle-down nav-arrow"></i>
+                            </button>
+                            <ul class="nav-submenu">
+                                <li><a href="/cat/fruit">Fruit</a></li>
+                                <li><a href="/cat/veg">Vegetables</a></li>
+                                <li><a href="/cat/dairy">Dairy</a></li>
+                                <li><a href="/cat/bakery">Bakery</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+            </div>
+
+        </header>
+
+        <!-- MOBILE SEARCH BAR -->
+        <form class="mobile-search" role="search" aria-label="Search products" action="/search" method="GET">
+            <label for="mobile-search-input" class="visually-hidden">Search products</label>
+            <div class="mobile-search-wrapper">
+                <input type="text" id="mobile-search-input" name="q" placeholder="Search fresh local products..." autocomplete="off">
+                <button type="submit" aria-label="Search"><i class="la la-search"></i></button>
+            </div>
+        </form>
+
+        <!-- MOBILE DRAWER -->
+        <aside class="mobile-menu" aria-hidden="true">
+
+            <button class="close-menu" aria-label="Close menu">
+                <span class="close-bar"></span>
+                <span class="close-bar"></span>
+            </button>
+
+            <nav aria-label="Mobile navigation">
+                <ul class="mobile-links">
+
+                    <li><a href="/"><i class="la la-home"></i> Home</a></li>
+
+                    <li class="has-submenu">
+                        <button class="submenu-toggle" aria-expanded="false">
+                            <span><i class="la la-th-large"></i> Categories</span>
+                            <i class="la la-angle-down submenu-arrow"></i>
+                        </button>
+
+                        <ul class="submenu">
+                            <li><a href="/cat/fruit"><i class="la la-apple"></i> Fruit</a></li>
+                            <li><a href="/cat/veg"><i class="la la-carrot"></i> Vegetables</a></li>
+                            <li><a href="/cat/dairy"><i class="la la-cheese"></i> Dairy</a></li>
+                            <li><a href="/cat/bakery"><i class="la la-bread-slice"></i> Bakery</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="/shop"><i class="la la-store"></i> Shop</a></li>
+                    <li><a href="/about"><i class="la la-info-circle"></i> About</a></li>
+                    <li><a href="/contact"><i class="la la-phone"></i> Contact</a></li>
+
+                    <li>
+                        <a href="/notifications" class="badge-link">
+                            <span class="icon-badge-wrap">
+                                <i class="la la-bell"></i>
+                                <span class="badge">5</span>
+                            </span>
+                            <span class="link-text">Notifications</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/cart" class="badge-link">
+                            <span class="icon-badge-wrap">
+                                <i class="la la-shopping-cart"></i>
+                                <span class="badge">3</span>
+                            </span>
+                            <span class="link-text">Cart</span>
+                        </a>
+                    </li>
+
+                    <li><a href="/account"><i class="la la-user"></i> Account</a></li>
+
+                </ul>
+            </nav>
+
+        </aside>
+
+        <!-- OVERLAY -->
+        <div class="menu-overlay"></div>
+
+
+        <!-- || ABOUT PAGE MAIN CONTENT || -->
+        <main>
+
+            <!-- MISSION SECTION  -->
+            <section class="info-card">
+                <div class="info-card-inner">
+
+                    <figure class="info-image-wrap">
+                        <div class="info-image-bg"></div>
+
+                        <img 
+                            src="/static/images/mission.jpg" 
+                            alt="Local farmers harvesting produce"
+                            class="info-image"
+                        >
+                        <figcaption class="visually-hidden">
+                            Local farmers harvesting produce
+                        </figcaption>
+
+                    </figure>
+
+                    <div class="info-content">
+                        <h3 class="info-title">Our Mission</h3>
+                        <p class="info-text">
+                            We exist to bring fresh, local, and sustainable products directly to our community.
+                            Supporting growers, reducing environmental impact, and making quality produce accessible.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- STORY SECTION -->
+            <section class="story-section">
+                <div class="story-container">
+
+                    <figure class="story-figure">
+                        <img 
+                            src="/static/images/story.jpg" 
+                            alt="Our early days working with local farmers"
+                            class="story-image"
+                        >
+                        <figcaption class="visually-hidden">
+                            Local farmers harvesting produce
+                        </figcaption>
+
+                        <figcaption class="visually-hidden">
+                            Our early days working with local farmers
+                        </figcaption>
+                    </figure>
+
+                    <div class="story-content">
+                        <h3 class="story-heading">Our Story</h3>
+
+                        <p class="story-text">
+                            GreenField began as a small community initiative, connecting local growers 
+                            with families who wanted fresh, honest produce. What started as a handful 
+                            of weekly deliveries has grown into a thriving network of farmers, makers, 
+                            and customers who believe in sustainable, local-first living.
+                        </p>
+
+                        <p class="story-text">
+                            Today, we continue to expand our reach while staying true to our roots — 
+                            supporting local agriculture, reducing waste, and building a healthier 
+                            future for our community.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- VALUES SECTION -->
+            <section class="values-section">
+                <div class="values-header">
+                    <h3 class="values-heading">Our Values</h3>
+                    <p class="values-subtext">
+                        The principles that guide everything we do — from sourcing to delivery.
+                    </p>
+                </div>
+
+                <div class="values-grid">
+
+                    <div class="value-card">
+                        <div class="value-icon-wrap">
+                            <i class="la la-leaf value-icon"></i>
+                        </div>
+                        <h4 class="value-title">Sustainability</h4>
+                        <p class="value-text">
+                            We prioritize eco‑friendly practices that protect our environment.
+                        </p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon-wrap">
+                            <i class="la la-handshake value-icon"></i>
+                        </div>
+                        <h4 class="value-title">Community</h4>
+                        <p class="value-text">
+                            Supporting local growers and families is at the heart of our mission.
+                        </p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon-wrap">
+                            <i class="la la-seedling value-icon"></i>
+                        </div>
+                        <h4 class="value-title">Freshness</h4>
+                        <p class="value-text">
+                            We deliver produce at peak quality — straight from local farms.
+                        </p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon-wrap">
+                            <i class="la la-balance-scale value-icon"></i>
+                        </div>
+                        <h4 class="value-title">Integrity</h4>
+                        <p class="value-text">
+                            Honest sourcing, transparent pricing, and genuine care for our customers.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- TEAM SECTION -->
+            <section class="team-section">
+                <div class="team-header">
+                    <h3 class="team-heading">Meet the Team</h3>
+                    <p class="team-subtext">
+                        The passionate people behind GreenField who make everything possible.
+                    </p>
+                </div>
+
+                <div class="team-grid">
+                    <div class="team-card">
+                        <figure class="team-image-wrap">
+                            <img src="/static/images/team1.jpg" alt="Team member" class="team-image">
+                            <figcaption class="visually-hidden">This is GLH Founder & CEO: Sarah Thompson</figcaption>
+                        </figure>
+                        <h4 class="team-name">Sarah Thompson</h4>
+                        <p class="team-role">Founder & CEO</p>
+                    </div>
+
+                    <div class="team-card">
+                        <figure class="team-image-wrap">
+                            <img src="/static/images/team2.jpg" alt="Team member" class="team-image">
+                            <figcaption class="visually-hidden">This is GLH Head of Operations</figcaption>
+                        </figure>
+                        <h4 class="team-name">James Carter</h4>
+                        <p class="team-role">Head of Operations</p>
+                    </div>
+
+                    <div class="team-card">
+                        <figure class="team-image-wrap">
+                            <img src="/static/images/team3.jpg" alt="Team member" class="team-image">
+                            <figcaption class="visually-hidden">This is GLH Lead Designer</figcaption>
+                        </figure>
+                        <h4 class="team-name">Emily Davis</h4>
+                        <p class="team-role">Lead Designer</p>
+                    </div>
+
+                    <div class="team-card">
+                        <figure class="team-image-wrap">
+                            <img src="/static/images/team4.jpg" alt="Team member" class="team-image">
+                            <figcaption class="visually-hidden">This is GLH Community Manager</figcaption>
+                        </figure>
+                        <h4 class="team-name">Michael Lee</h4>
+                        <p class="team-role">Community Manager</p>
+                    </div>
+
+                    <div class="team-card">
+                        <figure class="team-image-wrap">
+                            <img src="/static/images/team5.jpg" alt="Team member" class="team-image">
+                            <figcaption class="visually-hidden">This is the GLH Sustainability Leader</figcaption>
+                        </figure>
+                        <h4 class="team-name">Olivia Brown</h4>
+                        <p class="team-role">Sustainability Lead</p>
+                    </div>
+
+                    <div class="team-card">
+                        <figure class="team-image-wrap">
+                            <img src="/static/images/team6.jpg" alt="Team member" class="team-image">
+                            <figcaption class="visually-hidden">This is the GLH Logistics Coordinator</figcaption>
+                        </figure>
+                        <h4 class="team-name">Daniel Wilson</h4>
+                        <p class="team-role">Logistics Coordinator</p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- CTA SECTION -->
+            <section class="cta-section">
+                <div class="cta-container">
+
+                    <h3 class="cta-heading">Ready to Experience Fresh, Local Produce?</h3>
+
+                    <p class="cta-text">
+                        Join thousands of customers who trust GreenField for quality, sustainability, and community-first values.
+                    </p>
+
+                    <a href="/shop" class="cta-button">Shop Now</a>
+
+                </div>
+            </section>
+
+        </main>
+
+
+
+        <!-- || ABOUT PAGE FOOTER SECTION || -->
+        <footer class="footer">
+            <!-- TOP BRAND ROW -->
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <i class="la la-leaf"></i>
+                    <span class="logo-name">GreenField Local Hub</span>
+                </div>
+
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="la la-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="la la-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="la la-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="la la-linkedin"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="la la-youtube"></i></a>
+                </div>
+            </div>
+            <hr>
+
+            <!-- MAIN GRID -->
+            <div class="footer-columns">
+                <!-- COMPANY -->
+                <div class="footer-box">
+                    <h3>Company</h3>
+                    <span class="heading-bar"></span>
+                    <ul>
+                        <li><a href="">Home</a></li>
+                        <li><a href="">Contact us</a></li>
+                        <li><a href="">About us</a></li>
+                        <li><a href="">Get started</a></li>
+                    </ul>
+                </div>
+
+                <!-- SERVICE -->
+                <div class="footer-box">
+                    <h3>Service</h3>
+                    <span class="heading-bar"></span>
+                    <ul>
+                        <li><a href="">Orders & Returns</a></li>
+                        <li><a href="">Shipping</a></li>
+                        <li><a href="">Support</a></li>
+                        <li><a href="">FAQs</a></li>
+                    </ul>
+                </div>
+
+                <!-- ACCOUNT -->
+                <div class="footer-box">
+                    <h3>Account</h3>
+                    <span class="heading-bar"></span>
+                    <ul>
+                        <li><a href="">Profile</a></li>
+                        <li><a href="">My Account</a></li>
+                        <li><a href="">Preferences</a></li>
+                        <li><a href="">Purchases</a></li>
+                    </ul>
+                </div>
+
+                <!-- NEWSLETTER -->
+                <div class="footer-box newsletter">
+                    <h3>Newsletter</h3>
+                    <span class="heading-bar"></span>
+                    <p>Subscribe for updates and local offers.</p>
+                    <form>
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- LEGAL ROW -->
+            <div class="footer-legal">
+                <p>© 2026 GreenField Local Hub. All rights reserved.</p>
+
+                <div class="legal-links">
+                    <a href="">Privacy Policy</a>
+                    <a href="">Terms & Conditions</a>
+                </div>
+            </div>
+    </footer>
+
+    <script src="../static/js/mobile.js"></script>
+    </body>
+</html>

@@ -1,0 +1,253 @@
+/* || IMPORT BASE STYLES */
+@import './base.css';
+
+
+/* || CSS RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* || GENERAL STYLES */
+body {
+    background: var(--role-page-bg);
+    color: var(--role-text-main);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    transition: background 0.35s ease, color 0.35s ease;
+}
+
+/* ===========================
+   CONTACT PAGE STYLES
+=========================== */
+
+.contact-header {
+  text-align: center;
+  padding-block: var(--space-xl);
+}
+
+.contact-header h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-sm);
+}
+
+.contact-header p {
+  color: var(--role-text-muted);
+  max-width: 600px;
+  margin-inline: auto;
+  font-size: var(--text-base);
+}
+
+/* ===========================
+   CONTACT GRID
+=========================== */
+
+.contact-grid {
+  display: grid;
+  gap: var(--space-lg);
+  padding-bottom: var(--space-xl);
+  margin-top: var(--space-lg);
+}
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+/* ===========================
+   CONTACT INFO CARD
+=========================== */
+
+.contact-info {
+  padding: var(--space-lg);
+}
+
+.contact-info h2 {
+  font-family: var(--font-heading);
+  margin-bottom: var(--space-md);
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.info-item i {
+  font-size: 1.8rem;
+  color: var(--role-accent);
+}
+
+.info-item .label {
+  font-size: var(--text-sm);
+  color: var(--role-text-muted);
+}
+
+.info-item .value {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+}
+
+/* Social Icons */
+.socials {
+  margin-top: var(--space-lg);
+  display: flex;
+  gap: var(--space-md);
+}
+
+.socials a {
+  font-size: 1.6rem;
+  color: var(--role-text-main);
+  transition: var(--transition-smooth);
+}
+
+.socials a:hover {
+  color: var(--role-accent);
+}
+
+/* ===========================
+   CONTACT FORM CARD
+=========================== */
+
+.contact-form {
+  padding: var(--space-lg);
+}
+
+.contact-form h2 {
+  font-family: var(--font-heading);
+  margin-bottom: var(--space-md);
+}
+
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--role-border-default);
+  background: var(--role-page-bg-alt);
+  color: var(--role-text-main);
+  transition: var(--transition-smooth);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--role-accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.25);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  margin-top: var(--space-sm);
+}
+
+/* ============================================================
+   ANIMATED FORM INTERACTIONS
+============================================================ */
+
+/* Floating Label Effect */
+.form-group {
+  position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: var(--space-md) var(--space-sm) var(--space-sm);
+  transition: border-color var(--transition-smooth), background var(--transition-smooth);
+}
+
+.form-group label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  pointer-events: none;
+  font-size: var(--text-sm);
+  color: var(--role-text-muted);
+  transition: transform var(--transition-smooth), 
+              font-size var(--transition-smooth),
+              color var(--transition-smooth),
+              top var(--transition-smooth);
+}
+
+/* When input is focused */
+.form-group input:focus + label,
+.form-group textarea:focus + label {
+  color: var(--role-accent);
+  transform: translateY(-18px);
+  font-size: 0.75rem;
+}
+
+/* When input has content */
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:not(:placeholder-shown) + label {
+  transform: translateY(-18px);
+  font-size: 0.75rem;
+}
+
+/* Smooth Highlight Glow */
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 4px rgba(255, 159, 28, 0.25);
+}
+
+/* ============================================================
+   SUBMIT BUTTON ANIMATION
+============================================================ */
+
+.submit-btn {
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition-smooth), transform var(--transition-fast);
+}
+
+/* Hover lift */
+.submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Pressed */
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Shine effect */
+.submit-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+}
+
+.submit-btn:hover::after {
+  left: 120%;
+}

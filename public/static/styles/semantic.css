@@ -1,0 +1,628 @@
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    background: var(--footer-gradient), var(--role-surface-card);
+    border-bottom: 1px solid var(--role-border-default);
+    font-family: var(--font-main);
+}
+
+/* ROW 1 — LOGO + ACTIONS + MENU */
+.header-primary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-md);
+}
+
+
+/* ============================================================
+   LOGO = MOBILE + DESKTOP
+============================================================ */
+.header-logo .logo-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--role-text-main);
+}
+
+
+/* ============================================================
+   LOCATION BLOCK
+============================================================ */
+.header-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.location-icon {
+    font-size: 1.1rem;
+    color: var(--color-primary);
+}
+
+.location-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.location-label {
+    font-size: 0.7rem;
+    color: var(--role-text-muted);
+}
+
+.location-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--role-text-main);
+}
+
+/* ============================================================
+   SEARCH BAR (DESKTOP)
+============================================================ */
+.header-search {
+    flex: 1 1 auto;
+    max-width: 640px;
+    min-width: 200px;
+}
+
+.header-search-wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--role-surface-card);
+    border: 1px solid var(--role-border-default);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: box-shadow 0.25s ease;
+}
+
+.header-search-wrapper:focus-within {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.header-search input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--role-text-main);
+}
+
+.header-search input::placeholder {
+    color: var(--role-text-muted);
+}
+
+.header-search button {
+    background: var(--color-primary);
+    border: none;
+    padding: 0 16px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+/* ============================================================
+   RIGHT ACTIONS (ACCOUNT / ORDERS / CART)
+============================================================ */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.header-actions > * {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+/* Icon hover animation */
+.header-actions i,
+.header-location i,
+.all-menu-trigger i {
+    transition: transform var(--transition-smooth), color var(--transition-smooth);
+}
+
+.header-actions a:hover i,
+.header-actions button:hover i,
+.header-location:hover i,
+.all-menu-trigger:hover i {
+    transform: translateY(-2px) scale(1.12);
+    color: var(--color-primary);
+}
+
+
+/* Icon hover animation */
+.header-actions i,
+.all-menu-trigger i,
+.header-location i {
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.header-actions a:hover i,
+.header-actions button:hover i,
+.all-menu-trigger:hover i,
+.header-location:hover i {
+    color: var(--color-primary);
+    transform: scale(1.15);
+}
+
+/* ============================================================
+   ACCOUNT BLOCK
+============================================================ */
+.account-block {
+    position: relative;
+}
+
+.account-trigger {
+    height: 42px;
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.account-trigger:hover {
+    border-color: var(--color-primary);
+    background: rgba(0, 128, 0, 0.08);
+}
+
+.account-icon {
+    font-size: 1.6rem;
+    color: var(--role-text-main);
+}
+
+.account-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.account-line-top {
+    font-size: 0.75rem;
+    color: var(--role-text-muted);
+}
+
+.account-line-bottom {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--role-text-main);
+}
+
+/* ACCOUNT DROPDOWN */
+.account-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: var(--role-surface-card);
+    border: 1px solid var(--role-border-default);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    padding: 12px;
+    min-width: 220px;
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 2100;
+}
+
+.account-dropdown-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.account-signin-btn {
+    display: inline-block;
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--role-primary-bg);
+    color: var(--role-primary-text);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.account-section h4 {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+    color: var(--role-text-main);
+}
+
+.account-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.account-section li {
+    margin-bottom: 4px;
+}
+
+.account-section a {
+    font-size: 0.8rem;
+    color: var(--role-text-muted);
+    text-decoration: none;
+}
+
+.account-section a:hover {
+    color: var(--color-primary);
+}
+
+/* SHOW DROPDOWN */
+.account-block.open .account-dropdown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ============================================================
+   ORDERS
+============================================================ */
+.orders-link {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    text-decoration: none;
+    color: var(--role-text-main);
+    font-size: 0.8rem;
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.orders-link:hover {
+    background: rgba(0, 128, 0, 0.08);
+    color: var(--color-primary);
+}
+
+/* ============================================================
+   CART
+============================================================ */
+.cart-link {
+    height: 42px;
+    padding: 0 10px;
+    border-radius: var(--radius-sm);
+    transition: background 0.25s ease, color 0.25s ease;
+    text-decoration: none;
+    color: var(--role-text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cart-link:hover {
+    background: rgba(0, 128, 0, 0.08);
+    color: var(--color-primary);
+}
+
+.cart-icon-wrap {
+    position: relative;
+    font-size: 1.8rem;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 50%;
+    border: 2px solid var(--role-surface-card);
+}
+
+.cart-label {
+    margin-top: 2px;
+}
+
+/* ============================================================
+   MOBILE MENU BUTTON
+============================================================ */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    width: 24px;
+    height: 3px;
+    background: var(--role-text-main);
+    border-radius: 3px;
+    transition: transform 0.35s ease, opacity 0.25s ease;
+}
+
+/* ============================================================
+   SECONDARY NAV
+============================================================ */
+.header-secondary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 6px 20px 10px;
+    background: var(--role-surface-card);
+    border-top: 1px solid var(--role-border-default);
+    position: relative;
+}
+
+/* ============================================================
+   ALL MENU BUTTON
+============================================================ */
+.all-menu-trigger {
+    height: 42px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--role-surface-card);
+    border: 1px solid var(--role-border-default);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--role-text-main);
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.all-menu-trigger:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+/* ============================================================
+   DESKTOP MEGA MENU
+============================================================ */
+.all-mega-menu {
+    position: absolute;
+    left: 20px;
+    top: calc(100% + 6px);
+    background: var(--role-surface-card);
+    border: 1px solid var(--role-border-default);
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    padding: 16px;
+    display: none;
+    z-index: 2100;
+}
+
+.all-mega-inner {
+    display: flex;
+    gap: 30px;
+}
+
+.mega-column h4 {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    color: var(--role-text-main);
+}
+
+.mega-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mega-column li {
+    margin-bottom: 4px;
+}
+
+.mega-column a {
+    font-size: 0.85rem;
+    color: var(--role-text-muted);
+    text-decoration: none;
+}
+
+.mega-column a:hover {
+    color: var(--color-primary);
+}
+
+/* SHOW MEGA MENU */
+.all-menu-trigger.open + .all-mega-menu {
+    display: block;
+}
+
+/* ============================================================
+   MAIN NAV LINKS
+============================================================ */
+.header-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 18px;
+    font-family: var(--font-heading);
+}
+
+.header-nav a {
+    text-decoration: none;
+    color: var(--role-text-main);
+    font-size: 0.9rem;
+}
+
+.header-nav a:hover {
+    color: var(--color-primary);
+}
+
+/* ============================================================
+   CATEGORIES DROPDOWN
+============================================================ */
+.nav-has-submenu {
+    position: relative;
+}
+
+.nav-submenu-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font: inherit;
+    color: var(--role-text-main);
+}
+
+.nav-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.nav-submenu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: var(--role-surface-card);
+    border: 1px solid var(--role-border-default);
+    border-radius: 6px;
+    padding: 8px 0;
+    list-style: none;
+    display: none;
+    min-width: 160px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.nav-submenu li a {
+    display: block;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: var(--role-text-main);
+}
+
+.nav-submenu li a:hover {
+    background: #D6D3C8;
+    color: var(--color-primary);
+}
+
+.nav-has-submenu.open .nav-submenu {
+    display: block;
+}
+
+.nav-has-submenu.open .nav-arrow {
+    transform: rotate(180deg);
+}
+
+/* ============================================================
+   MOBILE SEARCH
+============================================================ */
+.mobile-search {
+    display: none;
+    padding: 8px 20px 12px;
+}
+
+.mobile-search-wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--role-surface-card);
+    border: 1px solid var(--role-border-default);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.mobile-search input {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--role-text-main);
+}
+
+.mobile-search button {
+    background: var(--color-primary);
+    border: none;
+    padding: 0 14px;
+    color: #fff;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 1150px) {
+    .header-location {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .header-location,
+    .header-search,
+    .header-nav,
+    .all-mega-menu {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .mobile-search {
+        display: block;
+    }
+
+    .header-primary {
+        justify-content: space-between;
+    }
+}
+
+/* ============================================================
+   DARK MODE
+============================================================ */
+@media (prefers-color-scheme: dark) {
+    .site-header {
+        background: var(--footer-gradient), #111;
+    }
+
+    .header-search-wrapper,
+    .mobile-search-wrapper,
+    .all-mega-menu,
+    .nav-submenu,
+    .account-dropdown {
+        background: #111;
+        border-color: #222;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+    }
+
+    .header-search input,
+    .mobile-search input {
+        color: #f5f5f5;
+    }
+
+    .header-search input::placeholder,
+    .mobile-search input::placeholder {
+        color: #bcbcbc;
+    }
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../static/styles/checkout.css">
+  <link rel="stylesheet" href="../static/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+
+  <title>Checkout - GreenField Local Hub</title>
+</head>
+<body>
+
+  <main class="container checkout-grid">
+
+    <!-- PROGRESS STEPS -->
+    <nav class="checkout-progress">
+      <div class="step active" data-step="0">Cart</div>
+      <div class="step" data-step="1">Details</div>
+      <div class="step" data-step="2">Shipping</div>
+      <div class="step" data-step="3">Payment</div>
+      <div class="step" data-step="4">Review</div>
+    </nav>
+
+    <!-- LEFT COLUMN -->
+    <section class="checkout-left">
+
+      <!-- Billing -->
+      <details class="card checkout-section" open data-step-index="1">
+        <summary class="section-title">
+          <span class="left">
+            <i class="la la-user"></i>
+            Billing Details
+          </span>
+          <span class="arrow la la-angle-down"></span>
+        </summary>
+
+        <div class="section-body">
+          <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <div class="input-icon">
+              <i class="la la-user"></i>
+              <input type="text" id="fullname" placeholder="John Doe">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-icon">
+              <i class="la la-envelope"></i>
+              <input type="email" id="email" placeholder="john@example.com">
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Shipping -->
+      <details class="card checkout-section" data-step-index="2">
+        <summary class="section-title">
+          <span class="left">
+            <i class="la la-map-marker"></i>
+            Shipping Address
+          </span>
+          <span class="arrow la la-angle-down"></span>
+        </summary>
+
+        <div class="section-body">
+          <div class="form-group">
+            <label for="address">Address</label>
+            <div class="input-icon">
+              <i class="la la-home"></i>
+              <input type="text" id="address" placeholder="123 Green Street">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">City</label>
+              <div class="input-icon">
+                <i class="la la-city"></i>
+                <input type="text" id="city" placeholder="London">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="postcode">Postcode</label>
+              <div class="input-icon">
+                <i class="la la-mail-bulk"></i>
+                <input type="text" id="postcode" placeholder="E1 4HQ">
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Payment -->
+      <details class="card checkout-section" data-step-index="3">
+        <summary class="section-title">
+          <span class="left">
+            <i class="la la-credit-card"></i>
+            Payment
+          </span>
+          <span class="arrow la la-angle-down"></span>
+        </summary>
+
+        <div class="section-body">
+
+          <!-- Card Preview -->
+          <div class="card-preview" id="card-preview">
+            <div class="row">
+              <span>GreenField Local Hub</span>
+              <i class="la la-leaf"></i>
+            </div>
+
+            <div class="number" id="card-preview-number">
+              1234 5678 9012 3456
+            </div>
+
+            <div class="row">
+              <div>
+                <div style="font-size: 0.7rem; opacity: 0.8;">CARDHOLDER</div>
+                <div id="card-preview-name">JOHN DOE</div>
+              </div>
+              <div>
+                <div style="font-size: 0.7rem; opacity: 0.8;">EXPIRES</div>
+                <div id="card-preview-exp">MM/YY</div>
+              </div>
+              <div>
+                <div style="font-size: 0.7rem; opacity: 0.8;">CVV</div>
+                <div id="card-preview-cvv">•••</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Inputs -->
+          <div class="form-group" style="margin-top: var(--space-lg);">
+            <label for="cardnum">Card Number</label>
+            <div class="input-icon">
+              <i class="la la-credit-card"></i>
+              <input type="text" id="cardnum" placeholder="1234 5678 9012 3456" maxlength="19">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="exp">Expiry</label>
+              <div class="input-icon">
+                <i class="la la-calendar"></i>
+                <input type="text" id="exp" placeholder="MM/YY" maxlength="5">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cvv">CVV</label>
+              <div class="input-icon">
+                <i class="la la-lock"></i>
+                <input type="password" id="cvv" placeholder="123" maxlength="3">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </details>
+
+    </section>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="checkout-right">
+      <div class="card order-summary">
+        <h2 class="section-title">
+          <span class="left">
+            <i class="la la-shopping-bag"></i>
+            Order Summary
+          </span>
+        </h2>
+
+        <div class="summary-item">
+          <span>Subtotal</span>
+          <span>£89.99</span>
+        </div>
+
+        <div class="summary-item">
+          <span>Shipping</span>
+          <span>£4.99</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>£94.98</span>
+        </div>
+
+        <button class="btn-primary checkout-btn" id="place-order-btn">
+          Place Order
+        </button>
+      </div>
+    </aside>
+
+  </main>
+
+  <div id="popup" class="popup hidden">
+    <div class="popup-content">
+      <i id="popup-icon" class="la popup-icon"></i>
+      <p id="popup-message"></p>
+      <button id="popup-close" class="popup-btn">OK</button>
+    </div>
+  </div>
+
+
+
+  <script src="../static/js/checkout.js"></script>
+</body>
+</html>

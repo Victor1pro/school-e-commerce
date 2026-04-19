@@ -1,0 +1,312 @@
+/* ============================================================
+   AUTH PAGE STYLESHEET
+   - Uses your global design tokens from base.css
+   - Implements a clean, modern, responsive authentication UI
+   - Follows glassmorphism-inspired surfaces and semantic colors
+============================================================ */
+
+@import './base.css';
+@import './checkout.css';
+
+/* 
+   GLOBAL TYPOGRAPHY
+   - Ensures consistent font usage across labels, inputs, and buttons.
+*/
+label, button, input {
+    font-family: var(--font-main);
+}
+
+p {
+    font-family: var(--font-heading);
+}
+
+/* ============================================================
+   AUTH PAGE LAYOUT
+   - Full viewport height
+   - Centers the authentication card
+   - Uses brand gradient background from your token system
+============================================================ */
+
+.auth-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Soft gradient using semantic tokens */
+    background: linear-gradient(
+        135deg,
+        var(--role-surface-card) 0%,
+        var(--footer-gradient) 100%
+    );
+
+    padding: 40px 20px;
+}
+
+/* ============================================================
+   AUTH CARD CONTAINER
+   - Glassmorphism-inspired card
+   - Uses semantic border + radius tokens
+   - Fade-in animation improves perceived performance
+============================================================ */
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    background: var(--role-surface-card);
+    padding: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--role-border-default);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    animation: fadeInUp 0.5s ease;
+}
+
+/* ============================================================
+   PAGE HEADING
+   - Uses heading font token
+   - Centered for clean visual hierarchy
+============================================================ */
+
+.auth-heading {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--role-text-main);
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* ============================================================
+   FORM STRUCTURE
+   - Vertical layout with consistent spacing
+============================================================ */
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ============================================================
+   INPUT FIELD GROUP
+   - Label + input pairing
+   - Uses semantic tokens for border + background
+============================================================ */
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+}
+
+.input-field label {
+    font-size: 0.95rem;
+    color: var(--role-text-main);
+    font-weight: 500;
+}
+
+.input-field input {
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--role-border-default);
+    background: var(--color-surface);
+    font-family: var(--font-main);
+    font-size: 1rem;
+    color: var(--role-text-main);
+    transition: border var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+/* 
+   INPUT FOCUS STATE
+   - Uses primary color token for accessibility
+   - Adds soft glow for premium UX
+*/
+.input-field input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.15);
+    outline: none;
+}
+
+/* ============================================================
+   SUBMIT BUTTON
+   - Full width CTA
+   - Uses primary brand color + hover elevation
+============================================================ */
+
+.auth-submit {
+    width: 100%;
+    padding: 12px;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition-smooth), transform 0.2s ease;
+}
+
+.auth-submit:hover {
+    background: var(--color-primary-hover, #0a7a0a);
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   SWITCH LINK (Login <-> Register)
+============================================================ */
+
+.auth-switch {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--role-text-muted);
+}
+
+.auth-switch a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
+   ANIMATIONS
+   - Smooth fade + upward motion for premium feel
+============================================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================
+   DARK MODE SUPPORT
+   - Uses prefers-color-scheme for automatic theme switching
+   - Adjusts surfaces, borders, and shadows for dark UI
+============================================================ */
+
+@media (prefers-color-scheme: dark) {
+    .auth-container {
+        background: #111;
+        border-color: #222;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .input-field input {
+        background: #0f0f0f;
+        border-color: #222;
+        color: #eee;
+    }
+
+    .input-field input:focus {
+        box-shadow: 0 0 0 3px rgba(0, 200, 0, 0.25);
+    }
+
+    .auth-section {
+        background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    }
+}
+
+
+/* ============================================================
+   PASSWORD STRENGTH METER
+============================================================ */
+
+.password-strength {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-top: 4px;
+    backdrop-filter: blur(8px);
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.35s ease, background 0.35s ease;
+    border-radius: var(--radius-sm);
+}
+
+.strength-label {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.85;
+}
+
+/* Colors */
+.strength-weak { background: #ff4d4d; }
+.strength-medium { background: #ff9800; }
+.strength-strong { background: #00c853; }
+.strength-very-strong { background: #0091ea; }
+
+
+/* ============================================================
+   INPUT VALIDATION STATES
+   - Red border for invalid fields
+   - Green border for valid fields
+   - Smooth transitions for premium UX
+============================================================ */
+
+.input-field input.invalid {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.25);
+}
+
+.input-field input.valid {
+    border-color: #00c853 !important;
+    box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.25);
+}
+
+/* Inline error message */
+.input-error {
+    color: #ff4d4d;
+    font-size: 0.8rem;
+    margin-top: -2px;
+    font-weight: 500;
+    opacity: 0.9;
+    padding-left: 2px;
+}
+
+/* ============================================================
+   PASSWORD TOGGLE ICON (Line Awesome)
+   - Bigger icon
+   - Perfectly centered vertically
+   - Works for hover + click reveal
+============================================================ */
+
+.password-toggle {
+    position: absolute;
+    right: 14px;
+    top: 85%;
+    transform: translateY(-50%);
+    font-size: 1.6rem; /* Bigger icon */
+    color: var(--role-text-main);
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* ensures perfect centering */
+    pointer-events: auto;
+    transition: color var(--transition-smooth), transform 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: var(--color-primary);
+    transform: translateY(-50%) scale(1.1);
+}

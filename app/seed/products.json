@@ -1,0 +1,416 @@
+[
+    {
+        "id": "1f2f1249-0470-46fb-a1a6-33c83a477f31",
+        "name": "Fresh Strawberries",
+        "description": "Locally grown sweet strawberries.",
+        "price": 3.50,
+        "stock": 40,
+        "image_url": "../static/assets/images/product-001.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "1c723ea9-9ae7-4577-850e-8708395d62f4",
+        "name": "Bananas",
+        "description": "Organic ripe bananas.",
+        "price": 1.20,
+        "stock": 60,
+        "image_url": "../static/assets/images/product-002.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "b5a038fd-c08c-4d5f-83c1-b364bfbbc8b2",
+        "name": "Watermelon",
+        "description": "Large juicy watermelon.",
+        "price": 4.99,
+        "stock": 20,
+        "image_url": "../static/assets/images/product-003.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "6243ec23-1d30-4c24-95fd-30d0b070d851",
+        "name": "Blueberries",
+        "description": "Fresh hand‑picked blueberries.",
+        "price": 2.99,
+        "stock": 35,
+        "image_url": "../static/assets/images/product-004.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "f37cc261-6263-4f2f-be23-6b5401ea6bcd",
+        "name": "Apples",
+        "description": "Crisp red apples.",
+        "price": 1.80,
+        "stock": 50,
+        "image_url": "../static/assets/images/product-005.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "1895cc03-e80f-4b50-b039-0f4898496702",
+        "name": "Pears",
+        "description": "Sweet conference pears.",
+        "price": 1.60,
+        "stock": 30,
+        "image_url": "../static/assets/images/product-006.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "68060956-468f-4b9a-b219-f32994dd8b2a",
+        "name": "Oranges",
+        "description": "Juicy seedless oranges.",
+        "price": 2.20,
+        "stock": 45,
+        "image_url": "../static/assets/images/product-007.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "afe66b6b-0803-4902-9a21-7962ee6f411e",
+        "name": "Grapes",
+        "description": "Fresh green grapes.",
+        "price": 2.50,
+        "stock": 40,
+        "image_url": "../static/assets/images/product-008.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "9cb4ce69-b9fd-4db0-bd9a-46b1f41bcaa5",
+        "name": "Pineapple",
+        "description": "Sweet tropical pineapple.",
+        "price": 3.20,
+        "stock": 25,
+        "image_url": "../static/assets/images/product-009.jpg",
+        "category_id": "fruit"
+    },
+    {
+        "id": "c3589def-876c-45ea-9184-598557257b5c",
+        "name": "Mango",
+        "description": "Ripe juicy mango.",
+        "price": 2.80,
+        "stock": 30,
+        "image_url": "../static/assets/images/product-010.jpg",
+        "category_id": "fruit"
+    },
+
+    {
+        "id": "b003af23-f548-4a87-ad70-9b2b355e8ab2",
+        "name": "Carrots",
+        "description": "Crunchy locally grown carrots.",
+        "price": 1.10,
+        "stock": 50,
+        "image_url": "../static/assets/images/product-011.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "eda477c1-2291-4f5d-9737-efbd2aa3564f",
+        "name": "Potatoes",
+        "description": "Fresh white potatoes.",
+        "price": 1.50,
+        "stock": 70,
+        "image_url": "../static/assets/images/product-012.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "9093ab39-650f-4c37-94b7-33ac3432a785",
+        "name": "Broccoli",
+        "description": "Fresh green broccoli.",
+        "price": 1.40,
+        "stock": 35,
+        "image_url": "../static/assets/images/product-013.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "30d4cdcb-0cd4-4eec-8e7d-5e101bbfcca7",
+        "name": "Tomatoes",
+        "description": "Vine‑ripened tomatoes.",
+        "price": 1.90,
+        "stock": 45,
+        "image_url": "../static/assets/images/product-014.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "eb0f9aee-7216-40c0-a57c-f88bcd1fd15e",
+        "name": "Cucumber",
+        "description": "Crisp English cucumber.",
+        "price": 0.99,
+        "stock": 40,
+        "image_url": "../static/assets/images/product-015.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "36928303-e50c-481d-9b7c-4357033d2d76",
+        "name": "Lettuce",
+        "description": "Fresh iceberg lettuce.",
+        "price": 1.00,
+        "stock": 30,
+        "image_url": "../static/assets/images/product-016.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "fc9a67d6-5023-4c57-b323-385dcf56c5b9",
+        "name": "Spinach",
+        "description": "Fresh baby spinach leaves.",
+        "price": 1.70,
+        "stock": 25,
+        "image_url": "../static/assets/images/product-017.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "172ddfb1-9932-4c7a-b4cc-0cc38c147bd9",
+        "name": "Onions",
+        "description": "Brown cooking onions.",
+        "price": 1.20,
+        "stock": 55,
+        "image_url": "../static/assets/images/product-018.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "c4eda605-8d5e-45cb-8669-ade064f8b605",
+        "name": "Garlic",
+        "description": "Fresh garlic bulbs.",
+        "price": 0.80,
+        "stock": 40,
+        "image_url": "../static/assets/images/product-019.jpg",
+        "category_id": "vegetables"
+    },
+    {
+        "id": "0409b496-f090-46ef-a836-325b3a190358",
+        "name": "Peppers",
+        "description": "Mixed bell peppers.",
+        "price": 2.30,
+        "stock": 35,
+        "image_url": "../static/assets/images/product-020.jpg",
+        "category_id": "vegetables"
+    },
+
+ 
+    {
+        "id": "1b0b15c7-f926-484d-b272-87bdffbae231",
+        "name": "Whole Milk",
+        "description": "Fresh local whole milk.",
+        "price": 1.30,
+        "stock": 60,
+        "image_url": "../static/assets/images/product-021.jpg",
+        "category_id": "dairy"
+    },
+    {
+        "id": "078b04ee-9e50-457d-88da-d98c5b46b186",
+        "name": "Semi‑Skimmed Milk",
+        "description": "Locally produced semi‑skimmed milk.",
+        "price": 1.20,
+        "stock": 55,
+        "image_url": "../static/assets/images/product-022.jpg",
+        "category_id": "dairy"
+    },
+    {
+        "id": "06503e51-929b-468c-aae8-0f609910c2aa",
+        "name": "Cheddar Cheese",
+        "description": "Mature cheddar cheese block.",
+        "price": 2.50,
+        "stock": 30,
+        "image_url": "../static/assets/images/product-023.jpg",
+        "category_id": "dairy"
+    },
+    {
+        "id": "cff72cd4-8d25-480c-9f75-4164cf699f6d",
+        "name": "Butter",
+        "description": "Creamy salted butter.",
+        "price": 1.80,
+        "stock": 40,
+        "image_url": "../static/assets/images/product-024.jpg",
+        "category_id": "dairy"
+    },
+    {
+        "id": "422c2581-5a22-4a6c-a157-b57c0fef441d",
+        "name": "Greek Yogurt",
+        "description": "Thick natural Greek yogurt.",
+        "price": 1.50,
+        "stock": 35,
+        "image_url": "../static/assets/images/product-025.jpg",
+        "category_id": "dairy"
+    },
+    {
+        "id": "43ec7887-b222-43c1-a4b7-6785f6e11c0e",
+        "name": "Fresh Cream",
+        "description": "Locally sourced double cream.",
+        "price": 1.40,
+        "stock": 25,
+        "image_url": "../static/assets/images/product-026.jpg",
+        "category_id": "dairy"
+    },
+    {
+        "id": "72605a0e-6ee8-4a36-bdbf-d0ac1cdb4ace",
+        "name": "Cottage Cheese",
+        "description": "Low‑fat cottage cheese.",
+        "price": 1.60,
+        "stock": 20,
+        "image_url": "../static/assets/images/product-027.jpg",
+        "category_id": "dairy"
+    },
+    {
+        "id": "e6e409d6-8625-4828-ac13-66b8223fc21f",
+        "name": "Mozzarella",
+        "description": "Soft mozzarella ball.",
+        "price": 1.80,
+        "stock": 30,
+        "image_url": "../static/assets/images/product-028.jpg",
+        "category_id": "dairy"
+    },
+
+
+    {
+        "id": "b8b3a0bf-b935-434f-b227-d48134e37197",
+        "name": "White Bread Loaf",
+        "description": "Freshly baked white loaf.",
+        "price": 1.10,
+        "stock": 40,
+        "image_url": "../static/assets/images/product-029.jpg",
+        "category_id": "bakery"
+    },
+    {
+        "id": "82fa61b6-5149-4722-b2bc-96cd449050c6",
+        "name": "Wholemeal Bread",
+        "description": "Healthy wholemeal loaf.",
+        "price": 1.20,
+        "stock": 35,
+        "image_url": "../static/assets/images/product-030.jpg",
+        "category_id": "bakery"
+    },
+    {
+        "id": "83a58bdd-e1c9-48f6-99d9-39b9fa0421fc",
+        "name": "Croissants",
+        "description": "Buttery French croissants.",
+        "price": 2.50,
+        "stock": 25,
+        "image_url": "../static/assets/images/product-031.jpg",
+        "category_id": "bakery"
+    },
+    {
+        "id": "1ac2a0a-deca-4686-b134-8c8bddd44642",
+        "name": "Muffins",
+        "description": "Fresh chocolate chip muffins.",
+        "price": 2.20,
+        "stock": 30,
+        "image_url": "../static/assets/images/product-032.jpg",
+        "category_id": "bakery"
+    },
+    {
+        "id": "12e9e101-2246-461e-b2f8-f9806aa077e4",
+        "name": "Bagels",
+        "description": "Soft plain bagels.",
+        "price": 2.00,
+        "stock": 20,
+        "image_url": "../static/assets/images/product-033.jpg",
+        "category_id": "bakery"
+    },
+    {
+        "id": "c19b4a74-509b-4c39-8525-61fe3477f0d3",
+        "name": "Baguette",
+        "description": "Crispy French baguette.",
+        "price": 1.30,
+        "stock": 25,
+        "image_url": "../static/assets/images/product-034.jpg",
+        "category_id": "bakery"
+    },
+    {
+        "id": "7d6f66f9-9bcf-4439-afa0-ce948652dec9",
+        "name": "Cinnamon Rolls",
+        "description": "Sweet cinnamon pastries.",
+        "price": 2.80,
+        "stock": 20,
+        "image_url": "../static/assets/images/product-035.jpg",
+        "category_id": "bakery"
+    },
+
+    
+    {
+        "id": "63f6bb22-f142-49b8-aacb-f19ba3964eb5",
+        "name": "Orange Juice",
+        "description": "Freshly squeezed orange juice.",
+        "price": 2.00,
+        "stock": 30,
+        "image_url": "../static/assets/images/product-036.jpg",
+        "category_id": "drinks"
+    },
+    {
+        "id": "466e9733-cea7-4a3b-bf71-055e00c8302b",
+        "name": "Apple Juice",
+        "description": "Pure pressed apple juice.",
+        "price": 1.80,
+        "stock": 25,
+        "image_url": "../static/assets/images/product-037.jpg",
+        "category_id": "drinks"
+    },
+    {
+        "id": "44666909-3b5a-4680-ad9b-1fce2c49556a",
+        "name": "Spring Water",
+        "description": "Natural spring water bottle.",
+        "price": 0.80,
+        "stock": 60,
+        "image_url": "../static/assets/images/product-038.jpg",
+        "category_id": "drinks"
+    },
+    {
+        "id": "38f31716-d883-4ab3-acd0-477fdbd0c14b",
+        "name": "Lemonade",
+        "description": "Refreshing homemade lemonade.",
+        "price": 1.50,
+        "stock": 20,
+        "image_url": "../static/assets/images/product-039.jpg",
+        "category_id": "drinks"
+    },
+    {
+        "id": "724b94d8-7a2a-486c-9a55-471c10050564",
+        "name": "Iced Tea",
+        "description": "Cold brewed iced tea.",
+        "price": 1.70,
+        "stock": 20,
+        "image_url": "../static/assets/images/product-040.jpg",
+        "category_id": "drinks"
+    },
+
+
+    {
+        "id": "933ec830-943f-49c8-824f-267f619c476f",
+        "name": "Local Honey",
+        "description": "Raw honey from local beekeepers.",
+        "price": 3.50,
+        "stock": 20,
+        "image_url": "../static/assets/images/product-041.jpg",
+        "category_id": "pantry"
+    },
+    {
+        "id": "0de8939d-41f7-41bd-8255-0dedcd5c1f37",
+        "name": "Strawberry Jam",
+        "description": "Homemade strawberry jam.",
+        "price": 2.80,
+        "stock": 25,
+        "image_url": "../static/assets/images/product-042.jpg",
+        "category_id": "pantry"
+    },
+    {
+        "id": "9b7522e2-5ca8-40d1-9b29-f8bfc200c22c",
+        "name": "Free‑Range Eggs",
+        "description": "Box of 6 free‑range eggs.",
+        "price": 1.90,
+        "stock": 40,
+        "image_url": "../static/assets/images/product-043.jpg",
+        "category_id": "pantry"
+    },
+    {
+        "id": "ef16182c-12ea-491c-90f9-45b1345ceec1",
+        "name": "Flour",
+        "description": "Locally milled plain flour.",
+        "price": 1.20,
+        "stock": 30,
+        "image_url": "../static/assets/images/product-044.jpg",
+        "category_id": "pantry"
+    },
+    {
+        "id": "f8cc5b57-74be-4e57-8007-0c18beee9342",
+        "name": "Brown Sugar",
+        "description": "Soft dark brown sugar.",
+        "price": 1.10,
+        "stock": 35,
+        "image_url": "../static/assets/images/product-045.jpg",
+        "category_id": "pantry"
+    }
+]

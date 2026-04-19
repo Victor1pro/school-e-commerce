@@ -1,0 +1,436 @@
+/*  || IMPORT BASE STYLES */
+@import './base.css';
+
+
+/* ============================================================
+   LAYOUT GRID
+============================================================ */
+.checkout-grid {
+  display: block;
+  margin-top: var(--space-xl);
+}
+
+.checkout-right {
+  margin-top: var(--space-xl);
+}
+
+@media (min-width: 900px) {
+  .checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--space-xl);
+  }
+
+  .checkout-right {
+    margin-top: 0;
+    position: sticky;
+    top: var(--space-xl);
+  }
+}
+
+/* ============================================================
+   APPLE-STYLE GLASSMORPHISM CARDS
+============================================================ */
+.card {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    background: rgba(20, 20, 20, 0.55);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* ============================================================
+   PROGRESS STEPS (Animated)
+============================================================ */
+.checkout-progress {
+  display: flex;
+  justify-content: space-between;
+  margin: var(--space-xl) 0;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  background: var(--role-surface-card);
+  border: 1px solid var(--role-border-default);
+}
+
+.checkout-progress .step {
+  flex: 1;
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--role-text-muted);
+  position: relative;
+  padding: var(--space-sm);
+  transition: color 0.35s ease;
+}
+
+.checkout-progress .step.active {
+  color: var(--color-primary);
+  font-weight: var(--weight-medium);
+}
+
+.checkout-progress .step.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: var(--color-primary);
+  border-radius: 2px;
+}
+
+/* Animated connecting line */
+.checkout-progress .step::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -50%;
+  width: 100%;
+  height: 2px;
+  background: var(--role-border-default);
+  z-index: -1;
+}
+
+.checkout-progress .step:first-child::before {
+  display: none;
+}
+
+/* ============================================================
+   COLLAPSIBLE SECTIONS
+============================================================ */
+details {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--role-border-default);
+  background: var(--role-surface-card);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+details[open] {
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-primary-light);
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg);
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+}
+
+.section-title .left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.section-title .arrow {
+  font-size: 1.4rem;
+  transition: transform 0.45s ease, color 0.3s ease;
+  color: var(--role-text-muted);
+}
+
+details[open] .section-title .arrow {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+
+/* ============================================================
+   SMOOTH EXPAND/COLLAPSE
+============================================================ */
+.section-body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    max-height 0.55s ease,
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+details[open] .section-body {
+  max-height: 1200px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   FORM ELEMENTS
+============================================================ */
+label {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-xs);
+  display: block;
+}
+
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 600px) {
+  .form-row {
+    flex-direction: row;
+  }
+}
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: var(--role-text-muted);
+  transition: var(--transition-smooth);
+}
+
+.input-icon input {
+  width: 100%;
+  padding: 12px 14px 12px 40px;
+  border: 1px solid var(--role-border-default);
+  border-radius: var(--radius-md);
+  background: var(--role-surface-card);
+  color: var(--role-text-main);
+  transition: var(--transition-smooth);
+}
+
+.input-icon input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(21, 62, 32, 0.25);
+}
+
+.input-icon:focus-within i {
+  color: var(--color-primary);
+  text-shadow: 0 0 6px rgba(21, 62, 32, 0.7);
+}
+
+/* ============================================================
+   CREDIT CARD PREVIEW (3D + Glow)
+============================================================ */
+.card-preview {
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+}
+
+.card-preview:hover {
+  transform: rotateX(8deg) rotateY(-8deg);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+}
+
+.card-preview .number {
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+}
+
+.card-preview .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-sm);
+}
+
+/* ============================================================
+   ORDER SUMMARY
+============================================================ */
+.summary-item,
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.summary-total {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-lg);
+  margin-top: var(--space-lg);
+}
+
+/* ============================================================
+   CHECKOUT BUTTON
+============================================================ */
+.checkout-btn {
+  width: 100%;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-lg);
+  font-size: var(--text-base);
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition-smooth), transform var(--transition-fast);
+}
+
+
+/* Hover lift */
+.checkout-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Pressed */
+.checkout-btn:active {
+  transform: translateY(0);
+}
+
+/* Shine effect */
+.checkout-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+}
+
+.checkout-btn:hover::after {
+  left: 120%;
+}
+
+/* ============================================================
+   POPUP OVERLAY
+============================================================ */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+}
+
+.popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================
+   POPUP CARD (Glassmorphism + Tokens)
+============================================================ */
+.popup-content {
+  background: var(--role-surface-card);
+  border: 1px solid var(--role-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  width: 90%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: var(--shadow-medium);
+  animation: popupIn 0.35s ease;
+  font-family: var(--font-main);
+}
+
+@keyframes popupIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   ICON
+============================================================ */
+.popup-icon {
+  font-size: 2.4rem;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+/* Success / Error / Info colors */
+.popup.success .popup-icon {
+  color: var(--color-success);
+}
+
+.popup.error .popup-icon {
+  color: var(--color-error);
+}
+
+.popup.info .popup-icon {
+  color: var(--color-accent-orange);
+}
+
+/* ============================================================
+   MESSAGE TEXT
+============================================================ */
+#popup-message {
+  font-size: var(--text-base);
+  color: var(--role-text-main);
+  margin-bottom: var(--space-lg);
+  line-height: var(--line-normal);
+}
+
+/* ============================================================
+   BUTTON
+============================================================ */
+.popup-btn {
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  background: var(--role-primary-bg);
+  color: var(--role-primary-text);
+  transition: background var(--transition-smooth), transform var(--transition-fast);
+}
+
+.popup-btn:hover {
+  background: var(--role-primary-bg-hover);
+  transform: translateY(-2px);
+}
+
+.popup-btn:active {
+  background: var(--role-primary-bg-active);
+  transform: translateY(0);
+}

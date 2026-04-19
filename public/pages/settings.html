@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Author" content="GreenField Local Hub Services">
+    <meta name="description" content="This is the Official site of GreenField Local Hub Services (GLH)">
+
+    <title>User Settings</title>
+
+    <!-- || LINK TO STYLESHEETS || -->
+    <link rel="stylesheet" href="../static/styles/settings.css">
+
+    <!-- || LINK TO LINE AWESOME ICONS || -->
+    <link rel="stylesheet" href="../static/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+
+</head>
+
+<body>
+
+    <section class="settings-container">
+
+        <h1 class="settings-title"><i class="la la-cog"></i> User Settings</h1>
+
+
+        <!-- ===========================
+            THEME MODE
+        ============================ -->
+        <div class="settings-card">
+            <div class="settings-row">
+                <div class="settings-info">
+                    <h2><i class="la la-moon"></i> Theme Mode</h2>
+                    <p>Switch between light and dark mode.</p>
+                </div>
+
+                <label class="toggle">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+
+        <!-- ===========================
+            HIGH CONTRAST
+        ============================ -->
+        <div class="settings-card">
+            <div class="settings-row">
+                <div class="settings-info">
+                    <h2><i class="la la-adjust"></i> High Contrast</h2>
+                    <p>Increase contrast for improved visibility.</p>
+                </div>
+
+                <label class="toggle">
+                    <input type="checkbox" id="contrastToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+
+        <!-- ===========================
+            TEXT SIZE
+        ============================ -->
+        <div class="settings-card">
+            <h2><i class="la la-text-height"></i> Text Size</h2>
+            <p>Adjust the text size across the site.</p>
+
+            <input type="range" id="textSizeRange" min="90" max="130" value="100">
+            <div class="text-preview">Sample Text Preview</div>
+        </div>
+
+
+        <!-- ===========================
+            NOTIFICATIONS
+        ============================ -->
+        <div class="settings-card">
+            <div class="settings-row">
+                <div class="settings-info">
+                    <h2><i class="la la-bell"></i> Notifications</h2>
+                    <p>Enable or disable site notifications.</p>
+                </div>
+
+                <label class="toggle">
+                    <input type="checkbox" id="notificationToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+
+        <!-- ===========================
+            EMAIL ALERTS
+        ============================ -->
+        <div class="settings-card">
+            <div class="settings-row">
+                <div class="settings-info">
+                    <h2><i class="la la-envelope"></i> Email Alerts</h2>
+                    <p>Receive updates about orders and promotions.</p>
+                </div>
+
+                <label class="toggle">
+                    <input type="checkbox" id="emailToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+
+        <!-- ===========================
+            PRIVACY & SECURITY
+        ============================ -->
+        <div class="settings-card">
+            <h2><i class="la la-shield-alt"></i> Privacy & Security</h2>
+
+            <div class="settings-list">
+                <a href="#" class="settings-item">
+                    <i class="la la-lock"></i>
+                    <span>Change Password</span>
+                    <i class="la la-angle-right"></i>
+                </a>
+
+                <a href="#" class="settings-item">
+                    <i class="la la-fingerprint"></i>
+                    <span>Two‑Factor Authentication</span>
+                    <i class="la la-angle-right"></i>
+                </a>
+
+                <a href="#" class="settings-item">
+                    <i class="la la-user-secret"></i>
+                    <span>Privacy Preferences</span>
+                    <i class="la la-angle-right"></i>
+                </a>
+            </div>
+        </div>
+
+
+        <!-- ===========================
+            DEVICE PERMISSIONS
+        ============================ -->
+        <div class="settings-card">
+            <h2><i class="la la-mobile"></i> Device Permissions</h2>
+
+            <div class="settings-list">
+                <a class="settings-item">
+                    <i class="la la-map-marker"></i>
+                    <span>Location Access</span>
+                    <label class="toggle small">
+                        <input type="checkbox" id="locationToggle">
+                        <span class="slider"></span>
+                    </label>
+                </a>
+
+                <a class="settings-item">
+                    <i class="la la-camera"></i>
+                    <span>Camera Access</span>
+                    <label class="toggle small">
+                        <input type="checkbox" id="cameraToggle">
+                        <span class="slider"></span>
+                    </label>
+                </a>
+
+                <a class="settings-item">
+                    <i class="la la-microphone"></i>
+                    <span>Microphone Access</span>
+                    <label class="toggle small">
+                        <input type="checkbox" id="micToggle">
+                        <span class="slider"></span>
+                    </label>
+                </a>
+            </div>
+        </div>
+
+
+        <!-- ===========================
+            ACCOUNT MANAGEMENT
+        ============================ -->
+        <div class="settings-card">
+            <h2><i class="la la-user-cog"></i> Account Management</h2>
+
+            <div class="settings-list">
+                <a href="/account" class="settings-item">
+                    <i class="la la-user"></i>
+                    <span>Profile Information</span>
+                    <i class="la la-angle-right"></i>
+                </a>
+
+                <a href="/orders" class="settings-item">
+                    <i class="la la-box"></i>
+                    <span>Order History</span>
+                    <i class="la la-angle-right"></i>
+                </a>
+
+                <a href="/logout" class="settings-item danger">
+                    <i class="la la-sign-out-alt"></i>
+                    <span>Log Out</span>
+                    <i class="la la-angle-right"></i>
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+    <script type="module" src="../static/js/user_settings.js" defer></script>
+    <script type="module" src="../static/js/settings_sync.js" defer></script>
+
+</body>
+</html>
