@@ -1,0 +1,82 @@
+/* || IMPORT BASE STYLES */
+@import './base.css';
+@import './auth.css';
+
+
+/* ============================================================
+   ADMIN LOGIN — GLASSMORPHISM + BRAND TOKENS
+============================================================ */
+
+.admin-glass {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid var(--role-border-default);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-soft);
+    padding: var(--space-xl) var(--space-lg);
+
+    transition: var(--transition-smooth);
+}
+
+/* Dark mode glass */
+:root[data-theme="dark"] .admin-glass {
+    background: rgba(20, 20, 20, 0.45);
+    border-color: var(--role-border-strong);
+}
+
+/* Heading */
+.auth-heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--role-text-main);
+    text-align: center;
+    margin-bottom: var(--space-md);
+}
+
+/* Admin badge */
+.admin-badge {
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-accent-orange);
+    margin-bottom: var(--space-lg);
+}
+
+/* Inputs */
+.input-field label {
+    font-size: var(--text-sm);
+    color: var(--role-text-muted);
+}
+
+.input-field input {
+    background: var(--role-surface-muted);
+    border: 1px solid var(--role-border-default);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    color: var(--role-text-main);
+    transition: var(--transition-smooth);
+}
+
+.input-field input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+/* Button */
+.admin-login-btn {
+    width: 100%;
+    margin-top: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--text-base);
+    border-radius: var(--radius-md);
+}
+
+/* Mobile-first */
+@media (max-width: 480px) {
+    .admin-glass {
+        padding: var(--space-lg) var(--space-md);
+    }
+}

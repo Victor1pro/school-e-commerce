@@ -1,6 +1,6 @@
 // IMPORT CART API
 import { CartAPI } from "./cart-api.js";
-import { updateCartBadge } from "./cart.js";
+import { updateCartBadge } from "./cart-badge.js";
 
 const API_URL = "http://127.0.0.1:9000/products/";
 
@@ -65,8 +65,8 @@ async function loadProducts() {
             card.querySelector(".add-to-cart-btn").addEventListener("click", async (e) => {
                 e.stopPropagation();
                 await CartAPI.addItem(product.id, 1);
-                updateCartBadge();
                 showCartToast("Added to cart");
+                updateCartBadge();
             });
 
             grid.appendChild(card);
@@ -109,8 +109,8 @@ async function loadProduct() {
     // Add to cart
     document.getElementById("add-to-cart-btn").onclick = async () => {
         await CartAPI.addItem(product.id, Number(qtyInput.value));
-        updateCartBadge();
         showCartToast("Added to cart");
+        updateCartBadge();
     };
 }
 

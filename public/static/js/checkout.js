@@ -139,11 +139,11 @@ placeOrderBtn.addEventListener('click', async () => {
   placeOrderBtn.textContent = "Processing...";
 
   try {
-    const res = await fetch("http://127.0.0.1:9000/checkout/", {
+      const res = await fetch("http://127.0.0.1:9000/checkout/", {
       method: "POST",
+      credentials: "include",   // <-- CRITICAL
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(payload)
     });
@@ -163,7 +163,7 @@ placeOrderBtn.addEventListener('click', async () => {
 
     // Redirect after short delay
     setTimeout(() => {
-      window.location.href = "/thank-you.html";
+      window.location.href = "public/pages/order.html";
     }, 1500);
 
   } catch (error) {

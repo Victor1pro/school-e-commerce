@@ -38,11 +38,8 @@ class CategoryBase(BaseModel):
 class CategoryCreate(CategoryBase):
     """
     Schema used when creating a new category.
-
-    Includes:
-        - slug: SEO-friendly identifier
     """
-    slug: str
+    pass
 
 
 class CategoryResponse(CategoryBase):
@@ -51,12 +48,10 @@ class CategoryResponse(CategoryBase):
 
     Includes:
         - id: Unique identifier
-        - slug: SEO-friendly identifier
         - created_at: Timestamp of creation
         - updated_at: Timestamp of last update
     """
-    id: UUID4
-    slug: str
+    id: str
     created_at: datetime
     updated_at: Optional[datetime] = None
 
@@ -77,7 +72,7 @@ class ProductBase(BaseModel):
     price: float = Field(gt=0)
     stock: int = Field(ge=0)
     image_url: str
-    category_id: UUID4
+    category_id: str
 
 
 class ProductCreate(ProductBase):
@@ -101,7 +96,7 @@ class ProductUpdate(BaseModel):
     price: Optional[float] = Field(default=None, gt=0)
     stock: Optional[int] = Field(default=None, ge=0)
     image_url: Optional[str] = None
-    category_id: Optional[UUID4] = None
+    category_id: Optional[str] = None
     is_active: Optional[bool] = None
 
 
@@ -116,7 +111,7 @@ class ProductResponse(ProductBase):
         - updated_at: Timestamp of last update
         - category: Nested category response (optional)
     """
-    id: UUID4
+    id: str
     is_active: bool
     created_at: datetime
     updated_at: Optional[datetime] = None

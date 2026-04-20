@@ -1,8 +1,0 @@
-[
-    {"id": "fruit", "name": "fruit", "description": "Freshly Picked fruits orm local farmers"},
-    {"id": "pantry", "name": "pantry", "description": "Locally sourced produces"},
-    {"id": "vegetables", "name": "vegetables", "description": "Freshly grown vegetables without fertilisers"},
-    {"id": "dairy", "name": "dairy", "description": "Diary from local farmers"},
-    {"id": "bakery", "name": "bakery", "description": "Locally sourced pstries and breads from our top notch bakers"},
-    {"id": "drinks", "name": "drinks", "description": "Drinks produces from local farmers"}
-]

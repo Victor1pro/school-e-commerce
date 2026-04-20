@@ -44,7 +44,10 @@ from app.routers import (
     category_router,
     payment_router,
     product_router,
-    search_router
+    search_router,
+    admin_product_router,
+    admin_category_router,
+    settings_router
 )
 
 
@@ -148,3 +151,6 @@ app.include_router(order_router.router)
 app.include_router(category_router.router)
 app.include_router(payment_router.router)
 app.include_router(product_router.router)
+app.include_router(admin_product_router.router)
+app.include_router(admin_category_router.router)
+app.include_router(settings_router.router)

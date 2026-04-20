@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/public/static/styles/dashboard.css">
+  <link rel="stylesheet" href="/public/static/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css">
+
+  <title>Dashboard - GreenField Local Hub</title>
+</head>
+<body>
+
+  <!-- FLOATING GLASS SIDEBAR -->
+  <aside class="gf-sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <i class="la la-leaf logo"></i>
+      <span>GreenField</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active"><i class="la la-home"></i> Dashboard</a>
+      <a class="nav-item"><i class="la la-shopping-bag"></i> Orders</a>
+      <a class="nav-item"><i class="la la-cogs"></i> Services</a>
+      <a class="nav-item"><i class="la la-users"></i> Customers</a>
+      <a class="nav-item"><i class="la la-chart-line"></i> Analytics</a>
+      <a class="nav-item"><i class="la la-user-cog"></i> Settings</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a class="nav-item logout"><i class="la la-sign-out-alt"></i> Logout</a>
+    </div>
+  </aside>
+
+  <!-- TOPBAR -->
+  <header class="gf-topbar">
+    <button id="menu-btn" class="menu-btn"><i class="la la-bars"></i></button>
+
+    <div class="topbar-search">
+      <i class="la la-search"></i>
+      <input type="text" placeholder="Search…">
+    </div>
+
+    <div class="topbar-actions">
+      <i class="la la-bell"></i>
+      <img src="https://i.pravatar.cc/40" class="avatar">
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="gf-content container">
+
+      <h1 class="page-title">Dashboard Overview</h1>
+
+      <!-- GRID OF CARDS -->
+      <section class="gf-grid">
+
+        <div class="gf-card-solid stat-card">
+          <h3>Orders Today</h3>
+          <p class="stat-number">42</p>
+        </div>
+
+        <div class="gf-card-solid stat-card">
+          <h3>Active Jobs</h3>
+          <p class="stat-number">17</p>
+        </div>
+
+        <div class="gf-card-solid stat-card">
+          <h3>New Customers</h3>
+          <p class="stat-number">9</p>
+        </div>
+
+        <div class="gf-card-solid stat-card">
+          <h3>Revenue</h3>
+          <p class="stat-number">£1,284</p>
+        </div>
+
+      </section>
+
+      <!-- CHARTS / TABLES -->
+      <section class="gf-grid">
+        <div class="gf-card-solid large-card">
+          <h2>Revenue Chart</h2>
+          <canvas id="revenueChart"></canvas>
+        </div>
+
+        <div class="gf-card-solid large-card">
+          <h2>Recent Orders</h2>
+          <table class="gf-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#1023</td>
+                <td>Sarah M.</td>
+                <td><span class="badge success">Completed</span></td>
+                <td>£39.99</td>
+              </tr>
+              <tr>
+                <td>#1024</td>
+                <td>James K.</td>
+                <td><span class="badge pending">Pending</span></td>
+                <td>£24.50</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      
+
+      <!-- PRODUCT MANAGEMENT -->
+      <section class="gf-grid full-width" aria-labelledby="products-heading">
+        <div class="gf-card-solid large-card">
+          <div class="product-header">
+            <h2 id="products-heading">Manage Products</h2>
+            <button id="addProductBtn" class="btn-primary" type="button">
+              <i class="la la-plus"></i>
+              <span>Add product</span>
+            </button>
+          </div>
+
+          <div class="table-wrapper" role="region" aria-label="Products table">
+            <table class="gf-table" id="productTable">
+              <thead>
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Stock</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRODUCT MODAL (GLASS, ACCESSIBLE) -->
+      <div class="modal-overlay" id="modalOverlay" aria-hidden="true"></div>
+
+      <div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content glass-card">
+          <div class="modal-header">
+            <h2 id="modalTitle">Add Product</h2>
+            <button id="closeModal" class="icon-btn" type="button" aria-label="Close dialog">
+              <i class="la la-times"></i>
+            </button>
+          </div>
+
+          <form id="productForm">
+            <input type="hidden" id="productId">
+
+            <label for="productName">Name</label>
+            <input type="text" id="productName" required autocomplete="off">
+
+            <label for="productDescription">Description</label>
+            <textarea id="productDescription" required rows="3"></textarea>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="productPrice">Price (£)</label>
+                <input type="number" id="productPrice" step="0.01" min="0" required>
+              </div>
+              <div class="form-field">
+                <label for="productStock">Stock</label>
+                <input type="number" id="productStock" min="0" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="productCategory">Category</label>
+                  <select id="productCategory" required>
+                    <!-- Filled dynamically from categories.json -->
+                  </select>
+              </div>
+              
+              <div class="form-field">
+                <label for="productImageFile">Product Image</label>
+                <div class="image-upload-wrapper">
+                  <input type="file" id="productImageFile" accept="image/*">
+                  <button type="button" id="uploadImageBtn" class="btn-secondary">
+                    <i class="la la-upload"></i> Upload Image
+                  </button>
+                </div>
+
+                <img id="imagePreview" alt="Preview" style="width:100%;max-height:160px;border-radius:var(--radius-md);display:none;margin-top:10px;">
+
+                <input type="hidden" id="productImage">
+              </div>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-secondary" id="cancelModal">Cancel</button>
+              <button type="submit" class="btn-primary">
+                <i class="la la-save"></i>
+                <span>Save</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </main>
+
+    <script type="module" src="/public/static/js/dashboard.js" defer></script>
+    <script type="module" src="/public/static/js/category.js" defer></script>
+    <script type="module" src="/public//static/js/product.js" defer></script>
+</body>
+</html>

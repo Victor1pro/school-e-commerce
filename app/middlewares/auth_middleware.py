@@ -1,8 +1,10 @@
 """
 Authentication Middleware with Silent Refresh
 ---------------------------------------------
-- Allows public pages & static assets
-- Protects private pages (checkout, orders, account)
+- Allows ALL static assets under /public (HTML, JS, CSS, images)
+- Allows public pages & public API routes
+- Protects private HTML pages (checkout, orders, account)
+- Protects private API routes
 - Validates JWT access tokens
 - Performs silent refresh using refresh token
 - Loads user into request.state.user
@@ -33,6 +35,9 @@ PUBLIC_HTML = [
     "/public/pages/about.html",
     "/public/pages/contact.html",
     "/public/pages/cart.html",
+
+    # Admin dashboard should load without login
+    "/public/pages/admin/dashboard.html"
 ]
 
 
@@ -89,8 +94,9 @@ PUBLIC_API = [
 # ============================================================
 def is_public(path: str) -> bool:
     """Return True if path is public."""
-    # Static assets
-    if path.startswith("/public/static"):
+
+    # Allow ALL static assets under /public (HTML, JS, CSS, images, uploads)
+    if path.startswith("/public"):
         return True
 
     # Public HTML pages
@@ -103,6 +109,7 @@ def is_public(path: str) -> bool:
             return True
 
     return False
+
 
 
 def is_protected_html(path: str) -> bool:
@@ -131,8 +138,12 @@ class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         path = request.url.path
 
+        # Allow all CORS preflight requests
+        if request.method == "OPTIONS":
+            return await call_next(request)
+
         # --------------------------------------------------------
-        # 1. Allow all public routes
+        # 1. Allow all public routes (including ALL /public files)
         # --------------------------------------------------------
         if is_public(path):
             return await call_next(request)

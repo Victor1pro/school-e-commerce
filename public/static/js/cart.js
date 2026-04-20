@@ -22,7 +22,7 @@ async function loadCart() {
 
         itemsContainer.innerHTML = "";
         cart.items.forEach(item => {
-            itemsContainer.innerHTML += renderCartItem(item);
+            itemsContainer.innerHTML = cart.items.map(renderCartItem).join("");
         });
 
         updateTotals(cart);

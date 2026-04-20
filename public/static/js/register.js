@@ -1,11 +1,13 @@
-// ============================================================
-// REGISTER PAGE SCRIPT
-// - Real-time validation for all fields
-// - Password strength meter
-// - Submit disabled until valid
-// - Password reveal toggle (Line Awesome)
-// - Uses showPopup() for all messages
-// ============================================================
+/* ============================================================
+   REGISTER PAGE SCRIPT (Unified User + Admin)
+   ------------------------------------------------------------
+   - Real-time validation
+   - Password strength meter
+   - Submit disabled until valid
+   - Password reveal toggle
+   - Uses registerUser() from auth.js
+   - Detects admin-register.html automatically
+============================================================ */
 
 import { registerUser, showPopup } from "./auth.js";
 import {
@@ -14,6 +16,13 @@ import {
     markInvalid,
     markValid
 } from "./auth_functions.js";
+
+/* ------------------------------------------------------------
+   DETECT REGISTRATION MODE
+   - If the page filename contains "admin-register"
+   - We treat this as an admin registration page
+------------------------------------------------------------ */
+const isAdminRegister = window.location.pathname.includes("admin-register");
 
 const registerForm = document.querySelector(".auth-form");
 
@@ -27,9 +36,9 @@ if (registerForm) {
     const strengthBar = document.querySelector(".strength-bar");
     const strengthLabel = document.querySelector(".strength-label");
 
-    // ============================================================
-    // PASSWORD REVEAL TOGGLE (Reusable function)
-    // ============================================================
+    /* ============================================================
+       PASSWORD REVEAL TOGGLE
+    ============================================================ */
     function attachPasswordToggle(inputEl) {
         const icon = document.createElement("i");
         icon.className = "la la-eye password-toggle";
@@ -37,21 +46,18 @@ if (registerForm) {
 
         icon.addEventListener("click", () => {
             const isPassword = inputEl.type === "password";
-
             inputEl.type = isPassword ? "text" : "password";
-
-            icon.classList.remove(isPassword ? "la-eye" : "la-eye-slash");
-            icon.classList.add(isPassword ? "la-eye-slash" : "la-eye");
+            icon.classList.toggle("la-eye");
+            icon.classList.toggle("la-eye-slash");
         });
     }
 
-    // Attach reveal toggle to BOTH password fields
     attachPasswordToggle(passwordInput);
     attachPasswordToggle(confirmInput);
 
-    // ============================================================
-    // PASSWORD STRENGTH METER
-    // ============================================================
+    /* ============================================================
+       PASSWORD STRENGTH METER
+    ============================================================ */
     function getPasswordStrength(password) {
         let score = 0;
         if (password.length >= 12) score++;
@@ -85,9 +91,9 @@ if (registerForm) {
         }
     }
 
-    // ============================================================
-    // ENABLE/DISABLE SUBMIT BUTTON
-    // ============================================================
+    /* ============================================================
+       ENABLE/DISABLE SUBMIT BUTTON
+    ============================================================ */
     function updateSubmitState() {
         const isValid =
             nameInput.classList.contains("valid") &&
@@ -100,10 +106,9 @@ if (registerForm) {
         submitBtn.style.cursor = isValid ? "pointer" : "not-allowed";
     }
 
-    // ============================================================
-    // REAL-TIME VALIDATION
-    // ============================================================
-
+    /* ============================================================
+       REAL-TIME VALIDATION
+    ============================================================ */
     nameInput.addEventListener("input", () => {
         if (nameInput.value.trim().length < 3) {
             markInvalid(nameInput, "Name must be at least 3 characters");
@@ -145,9 +150,12 @@ if (registerForm) {
         updateSubmitState();
     });
 
-    // ============================================================
-    // SUBMIT HANDLER
-    // ============================================================
+    /* ============================================================
+       SUBMIT HANDLER (Unified)
+       ------------------------------------------------------------
+       - Normal register → registerUser(name, email, pass)
+       - Admin register → registerUser(name, email, pass, true)
+    ============================================================ */
     registerForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
@@ -155,9 +163,9 @@ if (registerForm) {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
-        const data = await registerUser(name, email, password);
+        const success = await registerUser(name, email, password, isAdminRegister);
 
-        if (!data) {
+        if (!success) {
             showPopup("Registration failed", "error");
         }
     });

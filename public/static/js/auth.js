@@ -1,10 +1,11 @@
 /* ============================================================
-   AUTH MODULE (Unified)
+   AUTH MODULE (Unified for Users + Admins)
    - Register
-   - Login
+   - Login (User + Admin)
    - Logout
    - Popup system
    - LocalStorage user object
+   - Role-based redirects
 ============================================================ */
 
 const API_URL = "http://127.0.0.1:9000/auth/users";
@@ -63,9 +64,11 @@ export async function registerUser(name, email, password) {
 }
 
 /* ============================================================
-   LOGIN USER (Unified)
+   LOGIN (Unified)
+   - Works for both User Login + Admin Login
+   - Admin pages simply check role === "admin"
 ============================================================ */
-export async function loginUser(email, password) {
+export async function loginUser(email, password, isAdminLogin = false) {
     const payload = { email, password };
 
     try {
@@ -87,6 +90,29 @@ export async function loginUser(email, password) {
         // Store full user object
         localStorage.setItem("user", JSON.stringify(data.user));
 
+        /* --------------------------------------------------------
+           ADMIN LOGIN MODE
+           - If admin-login.html calls loginUser(..., true)
+           - We enforce role === "admin"
+        -------------------------------------------------------- */
+        if (isAdminLogin) {
+            if (data.user.role !== "admin") {
+                showPopup("Access denied — Admin role required", "error");
+                return null;
+            }
+
+            showPopup(`Welcome Admin, ${data.user.name}!`);
+
+            setTimeout(() => {
+                window.location.href = "/public/pages/admin/dashboard.html";
+            }, 1200);
+
+            return true;
+        }
+
+        /* --------------------------------------------------------
+           NORMAL USER LOGIN
+        -------------------------------------------------------- */
         showPopup(`Welcome back, ${data.user.name}!`);
 
         setTimeout(() => {
@@ -103,7 +129,7 @@ export async function loginUser(email, password) {
 }
 
 /* ============================================================
-   LOGOUT USER (Unified)
+   LOGOUT USER
 ============================================================ */
 export async function logoutUser() {
     try {
@@ -119,18 +145,31 @@ export async function logoutUser() {
 
         // Remove all user data
         localStorage.removeItem("user");
-        localStorage.removeItem("user_name"); // cleanup old key
         sessionStorage.clear();
 
         showPopup("You have been logged out");
 
         setTimeout(() => {
             window.location.assign("/public/pages/shop.html");
-            console.log("LOGOUT SUCCESS — redirecting...");
         }, 1200);
 
     } catch (error) {
         console.error("Logout error:", error);
         showPopup("Something went wrong.", "error");
+    }
+}
+
+/* ============================================================
+   ROLE CHECK HELPERS
+   - Used by dashboard.js and protected pages
+============================================================ */
+export function getCurrentUser() {
+    return JSON.parse(localStorage.getItem("user") || "null");
+}
+
+export function requireAdmin() {
+    const user = getCurrentUser();
+    if (!user || user.role !== "admin") {
+        window.location.href = "/public/pages/admin/admin-login.html";
     }
 }

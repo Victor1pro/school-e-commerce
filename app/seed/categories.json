@@ -1,0 +1,32 @@
+[
+  {
+    "id": "fruit",
+    "name": "fruit",
+    "description": "Freshly picked fruits from local farmers"
+  },
+  {
+    "id": "pantry",
+    "name": "pantry",
+    "description": "Locally sourced produce"
+  },
+  {
+    "id": "vegetables",
+    "name": "vegetables",
+    "description": "Freshly grown vegetables without fertilisers"
+  },
+  {
+    "id": "dairy",
+    "name": "dairy",
+    "description": "Dairy from local farmers"
+  },
+  {
+    "id": "bakery",
+    "name": "bakery",
+    "description": "Locally sourced pastries and breads"
+  },
+  {
+    "id": "drinks",
+    "name": "drinks",
+    "description": "Drinks produced by local farmers"
+  }
+]
