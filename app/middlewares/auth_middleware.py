@@ -36,7 +36,7 @@ PUBLIC_HTML = [
     "/public/pages/contact.html",
     "/public/pages/cart.html",
 
-    # Admin dashboard should load without login
+    # Admin dashboard loads without login
     "/public/pages/admin/dashboard.html"
 ]
 
@@ -54,7 +54,7 @@ PROTECTED_HTML = [
 
 
 # ============================================================
-# PUBLIC API ROUTES
+# PUBLIC API ROUTES (NO AUTH REQUIRED)
 # ============================================================
 PUBLIC_API = [
     "/auth/users/login",
@@ -86,6 +86,9 @@ PUBLIC_API = [
     "/redoc",
     "/health",
     "/ping",
+
+    # Allow OPTIONS preflight for checkout
+    "/checkout"
 ]
 
 
@@ -95,7 +98,7 @@ PUBLIC_API = [
 def is_public(path: str) -> bool:
     """Return True if path is public."""
 
-    # Allow ALL static assets under /public (HTML, JS, CSS, images, uploads)
+    # Allow ALL static assets under /public
     if path.startswith("/public"):
         return True
 
@@ -109,7 +112,6 @@ def is_public(path: str) -> bool:
             return True
 
     return False
-
 
 
 def is_protected_html(path: str) -> bool:
@@ -138,9 +140,12 @@ class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         path = request.url.path
 
-        # Allow all CORS preflight requests
+        # --------------------------------------------------------
+        # 0. ALWAYS allow OPTIONS (CORS preflight)
+        # --------------------------------------------------------
+        # Must return a clean 200 — NOT call_next()
         if request.method == "OPTIONS":
-            return await call_next(request)
+            return JSONResponse(status_code=200, content={"detail": "OK"})
 
         # --------------------------------------------------------
         # 1. Allow all public routes (including ALL /public files)
@@ -164,7 +169,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
                     request.state.user = user
                     return await call_next(request)
 
-            # Try silent refresh
+            # Silent refresh
             if refresh_token:
                 refresh_payload = verify_refresh_token(refresh_token)
                 if refresh_payload:
@@ -181,11 +186,12 @@ class AuthMiddleware(BaseHTTPMiddleware):
                             httponly=True,
                             secure=False,
                             samesite="lax",
+                            path="/",
                             max_age=60 * 15
                         )
                         return response
 
-            # Not authenticated → return 401
+            # Not authenticated
             return JSONResponse(
                 status_code=401,
                 content={"detail": "Authentication required"}
@@ -205,7 +211,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
                 request.state.user = user
                 return await call_next(request)
 
-        # Silent refresh
+        # Silent refresh for API
         if refresh_token:
             refresh_payload = verify_refresh_token(refresh_token)
             if refresh_payload:
@@ -222,6 +228,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
                         httponly=True,
                         secure=False,
                         samesite="lax",
+                        path="/",
                         max_age=60 * 15
                     )
                     return response
