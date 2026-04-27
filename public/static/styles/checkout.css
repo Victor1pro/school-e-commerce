@@ -1,64 +1,50 @@
-/*  || IMPORT BASE STYLES */
+/* ============================================================
+   IMPORT BASE TOKENS
+============================================================ */
 @import './base.css';
 
 
 /* ============================================================
-   LAYOUT GRID
+   CHECKOUT GRID — RESPONSIVE LAYOUT
 ============================================================ */
 .checkout-grid {
-  display: block;
-  margin-top: var(--space-xl);
-}
-
-.checkout-right {
-  margin-top: var(--space-xl);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2xl);
+  padding: var(--space-xl) var(--space-md);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 @media (min-width: 900px) {
   .checkout-grid {
-    display: grid;
     grid-template-columns: 1fr 350px;
-    gap: var(--space-xl);
-  }
-
-  .checkout-right {
-    margin-top: 0;
-    position: sticky;
-    top: var(--space-xl);
   }
 }
 
+
 /* ============================================================
-   APPLE-STYLE GLASSMORPHISM CARDS
+   LEFT COLUMN
 ============================================================ */
-.card {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+.checkout-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
 }
 
-@media (prefers-color-scheme: dark) {
-  .card {
-    background: rgba(20, 20, 20, 0.55);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
-}
 
 /* ============================================================
-   PROGRESS STEPS (Animated)
+   PROGRESS STEPS
 ============================================================ */
 .checkout-progress {
   display: flex;
   justify-content: space-between;
-  margin: var(--space-xl) 0;
   padding: var(--space-md);
   border-radius: var(--radius-lg);
   background: var(--role-surface-card);
   border: 1px solid var(--role-border-default);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: var(--space-xl);
 }
 
 .checkout-progress .step {
@@ -88,7 +74,6 @@
   border-radius: 2px;
 }
 
-/* Animated connecting line */
 .checkout-progress .step::before {
   content: "";
   position: absolute;
@@ -97,41 +82,53 @@
   width: 100%;
   height: 2px;
   background: var(--role-border-default);
-  z-index: -1;
 }
 
 .checkout-progress .step:first-child::before {
   display: none;
 }
 
+
+/* ============================================================
+   CARD — TOKEN GLASSMORPHISM
+============================================================ */
+.card,
+.order-summary,
+.checkout-section {
+  background: var(--role-surface-card);
+  border: 1px solid var(--role-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-soft);
+
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card:hover,
+.order-summary:hover,
+.checkout-section:hover {
+  background: var(--role-surface-muted);
+  box-shadow: var(--shadow-medium);
+}
+
+
 /* ============================================================
    COLLAPSIBLE SECTIONS
 ============================================================ */
-details {
-  border-radius: var(--radius-lg);
+details.checkout-section {
+  padding: 0;
   overflow: hidden;
-  border: 1px solid var(--role-border-default);
-  background: var(--role-surface-card);
-  transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-details[open] {
-  box-shadow: var(--shadow-medium);
-  border-color: var(--color-primary-light);
-}
-
-details summary::-webkit-details-marker {
-  display: none;
-}
-
-.section-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-lg);
+details summary.section-title {
+  padding: var(--space-xl);
   cursor: pointer;
-  font-family: var(--font-heading);
-  font-size: var(--text-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
 }
 
 .section-title .left {
@@ -142,8 +139,8 @@ details summary::-webkit-details-marker {
 
 .section-title .arrow {
   font-size: 1.4rem;
-  transition: transform 0.45s ease, color 0.3s ease;
   color: var(--role-text-muted);
+  transition: transform 0.45s ease, color 0.3s ease;
 }
 
 details[open] .section-title .arrow {
@@ -151,10 +148,8 @@ details[open] .section-title .arrow {
   color: var(--color-primary);
 }
 
-/* ============================================================
-   SMOOTH EXPAND/COLLAPSE
-============================================================ */
 .section-body {
+  padding: var(--space-xl);
   max-height: 0;
   overflow: hidden;
   opacity: 0;
@@ -166,22 +161,15 @@ details[open] .section-title .arrow {
 }
 
 details[open] .section-body {
-  max-height: 1200px;
+  max-height: 3000px;
   opacity: 1;
   transform: translateY(0);
 }
 
+
 /* ============================================================
    FORM ELEMENTS
 ============================================================ */
-label {
-  font-family: var(--font-heading);
-  font-size: var(--text-base);
-  font-weight: var(--weight-medium);
-  margin-bottom: var(--space-xs);
-  display: block;
-}
-
 .form-group {
   margin-bottom: var(--space-lg);
 }
@@ -198,6 +186,13 @@ label {
   }
 }
 
+label {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-xs);
+}
+
 .input-icon {
   position: relative;
 }
@@ -207,34 +202,35 @@ label {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.1rem;
   color: var(--role-text-muted);
-  transition: var(--transition-smooth);
+  font-size: 1.1rem;
 }
 
 .input-icon input {
   width: 100%;
   padding: 12px 14px 12px 40px;
-  border: 1px solid var(--role-border-default);
   border-radius: var(--radius-md);
+  border: 1px solid var(--role-border-default);
   background: var(--role-surface-card);
   color: var(--role-text-main);
   transition: var(--transition-smooth);
 }
 
 .input-icon input:focus {
-  outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(21, 62, 32, 0.25);
 }
 
 .input-icon:focus-within i {
   color: var(--color-primary);
-  text-shadow: 0 0 6px rgba(21, 62, 32, 0.7);
 }
 
+
 /* ============================================================
-   CREDIT CARD PREVIEW (3D + Glow)
+   CARD PREVIEW
+============================================================ */
+/* ============================================================
+   CARD PREVIEW — FIXED LAYOUT (NO WRAPPING)
 ============================================================ */
 .card-preview {
   width: 100%;
@@ -246,9 +242,9 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transform-style: preserve-3d;
-  transition: transform 0.45s ease, box-shadow 0.45s ease;
   box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+  overflow: hidden;
 }
 
 .card-preview:hover {
@@ -256,20 +252,58 @@ label {
   box-shadow: 0 20px 45px rgba(0,0,0,0.35);
 }
 
-.card-preview .number {
-  font-size: 1.4rem;
-  letter-spacing: 2px;
-}
-
-.card-preview .row {
+/* Header row */
+.card-preview .card-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: var(--text-sm);
 }
 
+/* Card number — single line, no wrapping */
+.card-preview .card-number {
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Footer row — expiry + cvv on same line */
+.card-preview .card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-lg);
+}
+
+/* Blocks */
+.card-preview .holder-block,
+.card-preview .exp-block,
+.card-preview .cvv-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Labels */
+.card-preview .label {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+}
+
 /* ============================================================
-   ORDER SUMMARY
+   ORDER SUMMARY (RIGHT COLUMN)
 ============================================================ */
+.order-summary h2 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
 .summary-item,
 .summary-total {
   display: flex;
@@ -278,10 +312,10 @@ label {
 }
 
 .summary-total {
-  font-weight: var(--weight-bold);
   font-size: var(--text-lg);
-  margin-top: var(--space-lg);
+  font-weight: var(--weight-bold);
 }
+
 
 /* ============================================================
    CHECKOUT BUTTON
@@ -290,48 +324,23 @@ label {
   width: 100%;
   padding: var(--space-md);
   border-radius: var(--radius-lg);
-  margin-top: var(--space-lg);
   font-size: var(--text-base);
-  position: relative;
-  overflow: hidden;
-  transition: background var(--transition-smooth), transform var(--transition-fast);
+  font-weight: var(--weight-semibold);
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: var(--space-xl);
+  transition: var(--transition-smooth);
 }
 
-
-/* Hover lift */
 .checkout-btn:hover {
-  transform: translateY(-2px);
+  background: var(--color-primary-dark);
 }
 
-/* Pressed */
-.checkout-btn:active {
-  transform: translateY(0);
-}
-
-/* Shine effect */
-.checkout-btn::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255, 255, 255, 0.4),
-        transparent
-    );
-    transform: skewX(-20deg);
-    transition: left 0.6s ease;
-}
-
-.checkout-btn:hover::after {
-  left: 120%;
-}
 
 /* ============================================================
-   POPUP OVERLAY
+   POPUP
 ============================================================ */
 .popup {
   position: fixed;
@@ -351,9 +360,6 @@ label {
   pointer-events: auto;
 }
 
-/* ============================================================
-   POPUP CARD (Glassmorphism + Tokens)
-============================================================ */
 .popup-content {
   background: var(--role-surface-card);
   border: 1px solid var(--role-border-default);
@@ -363,74 +369,23 @@ label {
   max-width: 380px;
   text-align: center;
   box-shadow: var(--shadow-medium);
-  animation: popupIn 0.35s ease;
-  font-family: var(--font-main);
 }
 
-@keyframes popupIn {
-  from {
-    transform: scale(0.85);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* ============================================================
-   ICON
-============================================================ */
 .popup-icon {
   font-size: 2.4rem;
   margin-bottom: var(--space-md);
-  display: block;
 }
 
-/* Success / Error / Info colors */
-.popup.success .popup-icon {
-  color: var(--color-success);
-}
-
-.popup.error .popup-icon {
-  color: var(--color-error);
-}
-
-.popup.info .popup-icon {
-  color: var(--color-accent-orange);
-}
-
-/* ============================================================
-   MESSAGE TEXT
-============================================================ */
-#popup-message {
-  font-size: var(--text-base);
-  color: var(--role-text-main);
-  margin-bottom: var(--space-lg);
-  line-height: var(--line-normal);
-}
-
-/* ============================================================
-   BUTTON
-============================================================ */
 .popup-btn {
   padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius-md);
-  border: none;
-  cursor: pointer;
-  font-size: var(--text-base);
-  font-weight: var(--weight-medium);
   background: var(--role-primary-bg);
   color: var(--role-primary-text);
-  transition: background var(--transition-smooth), transform var(--transition-fast);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
 }
 
 .popup-btn:hover {
   background: var(--role-primary-bg-hover);
-  transform: translateY(-2px);
-}
-
-.popup-btn:active {
-  background: var(--role-primary-bg-active);
-  transform: translateY(0);
 }

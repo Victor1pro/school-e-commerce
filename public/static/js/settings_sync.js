@@ -124,38 +124,47 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =========================================================
        STEP 4 — APPLY MERGED SETTINGS TO UI
     ========================================================== */
-
     const applyMergedSettingsToUI = () => {
+        const themeToggle = document.getElementById("themeToggle");
+        const contrastToggle = document.getElementById("contrastToggle");
+        const textSizeRange = document.getElementById("textSizeRange");
+        const notificationToggle = document.getElementById("notificationToggle");
+        const emailToggle = document.getElementById("emailToggle");
+        const locationToggle = document.getElementById("locationToggle");
+        const cameraToggle = document.getElementById("cameraToggle");
+        const micToggle = document.getElementById("micToggle");
+
         // Theme
-        const theme = loadLocal(LOCAL_KEYS.theme, "light");
-        document.getElementById("themeToggle").checked = (theme === "dark");
+        if (themeToggle)
+            themeToggle.checked = loadLocal(LOCAL_KEYS.theme, "light") === "dark";
 
         // Contrast
-        const contrast = loadLocal(LOCAL_KEYS.contrast, false);
-        document.getElementById("contrastToggle").checked = contrast;
+        if (contrastToggle)
+            contrastToggle.checked = loadLocal(LOCAL_KEYS.contrast, false);
 
         // Text size
-        const textSize = loadLocal(LOCAL_KEYS.textSize, 100);
-        document.getElementById("textSizeRange").value = textSize;
+        if (textSizeRange)
+            textSizeRange.value = loadLocal(LOCAL_KEYS.textSize, 100);
 
         // Notifications
-        document.getElementById("notificationToggle").checked =
-            loadLocal(LOCAL_KEYS.notifications, false);
+        if (notificationToggle)
+            notificationToggle.checked = loadLocal(LOCAL_KEYS.notifications, false);
 
         // Email alerts
-        document.getElementById("emailToggle").checked =
-            loadLocal(LOCAL_KEYS.emailAlerts, false);
+        if (emailToggle)
+            emailToggle.checked = loadLocal(LOCAL_KEYS.emailAlerts, false);
 
         // Device permissions
-        document.getElementById("locationToggle").checked =
-            loadLocal(LOCAL_KEYS.deviceLocation, false);
+        if (locationToggle)
+            locationToggle.checked = loadLocal(LOCAL_KEYS.deviceLocation, false);
 
-        document.getElementById("cameraToggle").checked =
-            loadLocal(LOCAL_KEYS.deviceCamera, false);
+        if (cameraToggle)
+            cameraToggle.checked = loadLocal(LOCAL_KEYS.deviceCamera, false);
 
-        document.getElementById("micToggle").checked =
-            loadLocal(LOCAL_KEYS.deviceMic, false);
+        if (micToggle)
+            micToggle.checked = loadLocal(LOCAL_KEYS.deviceMic, false);
     };
+
 
 
     /* =========================================================

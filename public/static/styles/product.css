@@ -1,58 +1,27 @@
+/* ============================================================
+   IMPORT BASE TOKENS
+============================================================ */
 @import './base.css';
 
 
-/* || CSS RESET */
+/* ============================================================
+   RESET
+============================================================ */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-ul, ol {
-    list-style: none;
-}
-
-html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* || BASE STYLES */
-body {
-    font-family: var(--font-main);
-    background: var(--color-bg);
-    color: var(--color-text);
-    line-height: var(--line-normal);
-    padding-bottom: var(--space-xl);
-}
-
 
 img {
-    max-width: 100%;
-    display: block;
+  display: block;
+  max-width: 100%;
 }
 
-
-button {
-    font-family: inherit;
+button, input {
+  font-family: inherit;
 }
 
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    line-height: var(--line-tight);
-    color: var(--color-text);
-}
-
-
-/* ============================================================
-   ACCESSIBILITY HELPERS
-============================================================ */
 .visually-hidden {
   position: absolute;
   left: -100px;
@@ -60,11 +29,11 @@ h1, h2, h3, h4, h5, h6 {
   height: 1px;
   overflow: hidden;
   clip: rect(0 0 0 0);
-  white-space: nowrap;
 }
 
+
 /* ============================================================
-   LAYOUT — MOBILE FIRST
+   PAGE LAYOUT — MOBILE FIRST
 ============================================================ */
 .product-page {
   display: flex;
@@ -84,23 +53,20 @@ h1, h2, h3, h4, h5, h6 {
 
 
 /* ============================================================
-   LEFT SIDE — PRODUCT IMAGE (Glassmorphic Card)
+   PRODUCT IMAGE — TOKEN GLASSMORPHISM
 ============================================================ */
 .product-media {
   flex: 1;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(18px) saturate(180%);
+
+  background: var(--role-surface-card);
+  border: 1px solid var(--role-border-default);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-}
+  box-shadow: var(--shadow-soft);
 
-@media (prefers-color-scheme: dark) {
-  .product-media {
-    background: rgba(20, 20, 20, 0.55);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  margin-right: 1.5rem;
 }
 
 .product-media img {
@@ -127,7 +93,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 /* ============================================================
-   RIGHT SIDE — PRODUCT DETAILS
+   PRODUCT DETAILS — TOKEN GLASSMORPHISM
 ============================================================ */
 .product-details {
   flex: 1;
@@ -135,19 +101,14 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   gap: var(--space-lg);
 
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(18px) saturate(180%);
+  background: var(--role-surface-card);
+  border: 1px solid var(--role-border-default);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-}
+  box-shadow: var(--shadow-soft);
 
-@media (prefers-color-scheme: dark) {
-  .product-details {
-    background: rgba(20, 20, 20, 0.55);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
 }
 
 .product-details h1 {
@@ -211,7 +172,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 /* ============================================================
-   ADD TO CART BUTTON (Matches checkout/cart)
+   ADD TO CART BUTTON
 ============================================================ */
 .add-to-cart-btn {
   width: 100%;

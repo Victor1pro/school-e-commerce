@@ -34,11 +34,7 @@ p {
     align-items: center;
 
     /* Soft gradient using semantic tokens */
-    background: linear-gradient(
-        135deg,
-        var(--role-surface-card) 0%,
-        var(--footer-gradient) 100%
-    );
+    background: var(--footer-gradient);
 
     padding: 40px 20px;
 }
@@ -124,7 +120,7 @@ p {
 */
 .input-field input:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(0, 128, 0, 0.15);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
     outline: none;
 }
 
@@ -196,24 +192,19 @@ p {
 ============================================================ */
 
 @media (prefers-color-scheme: dark) {
-    .auth-container {
-        background: #111;
-        border-color: #222;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+     .auth-container {
+        background: var(--role-surface-card);
+        border-color: var(--role-border-default);
     }
 
     .input-field input {
-        background: #0f0f0f;
-        border-color: #222;
-        color: #eee;
-    }
-
-    .input-field input:focus {
-        box-shadow: 0 0 0 3px rgba(0, 200, 0, 0.25);
+        background: var(--color-surface);
+        border-color: var(--role-border-default);
+        color: var(--role-text-main);
     }
 
     .auth-section {
-        background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+        background: var(--footer-gradient);
     }
 }
 
@@ -225,7 +216,7 @@ p {
 .password-strength {
     width: 100%;
     height: 6px;
-    background: rgba(255,255,255,0.15);
+    background: var(--role-surface-muted);
     border-radius: var(--radius-sm);
     overflow: hidden;
     margin-top: 4px;
@@ -244,14 +235,15 @@ p {
     margin-top: 4px;
     font-size: 0.8rem;
     font-weight: 600;
-    opacity: 0.85;
+    color: var(--role-text-main);
 }
 
-/* Colors */
-.strength-weak { background: #ff4d4d; }
-.strength-medium { background: #ff9800; }
-.strength-strong { background: #00c853; }
-.strength-very-strong { background: #0091ea; }
+/* Theme-adaptive colors */
+.strength-weak { background: color-mix(in srgb, #ff4d4d 85%, var(--role-page-bg)); }
+.strength-medium { background: color-mix(in srgb, #ff9800 85%, var(--role-page-bg)); }
+.strength-strong { background: color-mix(in srgb, #00c853 85%, var(--role-page-bg)); }
+.strength-very-strong { background: color-mix(in srgb, #0091ea 85%, var(--role-page-bg)); }
+
 
 
 /* ============================================================

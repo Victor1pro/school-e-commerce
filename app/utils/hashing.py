@@ -4,32 +4,36 @@ Password Hashing Utilities.
 This module provides secure password hashing and verification using the
 Argon2 algorithm via Passlib's CryptContext.
 
-Argon2 is a modern, memory‑hard hashing algorithm designed to resist:
+Argon2 is a modern, memory-hard hashing algorithm designed to resist:
 - GPU cracking
-- Brute‑force attacks
-- Side‑channel attacks
+- Brute-force attacks
+- Side-channel attacks
 
 This module is used throughout the authentication system to ensure
 passwords are never stored or compared in plain text.
 """
 
+import os
 from passlib.context import CryptContext
 from passlib.exc import UnknownHashError
 
 
 # =========================================================
-# ARGON2 HASHING CONFIGURATION
+# ARGON2 HASHING CONFIGURATION (UVICORN SAFE DEFAULTS)
 # =========================================================
-# Configure Passlib to use Argon2 with strong security parameters.
-# These settings increase resistance to brute‑force attacks.
+
+
+# IMPORTANT:
+# Each password hash/verify temporarily consumes this much memory.
+# Adjust values via environment variables if your server has more RAM.
 pwd_context = CryptContext(
     schemes=["argon2"],
     deprecated="auto",
 
-    # Argon2 parameters (strong defaults)
-    argon2__memory_cost=102400,   # 100 MB memory usage
-    argon2__parallelism=8,        # Number of threads
-    argon2__time_cost=3           # Number of hashing iterations
+    # Argon2 parameters (Uvicorn-friendly defaults)
+    argon2__memory_cost=int(os.getenv("ARGON2_MEMORY_COST", 65536)),  # 64 MB
+    argon2__parallelism=int(os.getenv("ARGON2_PARALLELISM", 4)),      # Threads
+    argon2__time_cost=int(os.getenv("ARGON2_TIME_COST", 3))           # Iterations
 )
 
 
@@ -54,7 +58,17 @@ class PasswordHasher:
 
         Returns:
             str: A secure Argon2 hash suitable for database storage.
+
+        Raises:
+            ValueError: If the password is empty.
+            TypeError: If the password is not a string.
         """
+        if not isinstance(password, str):
+            raise TypeError("Password must be a string")
+
+        if not password:
+            raise ValueError("Password must not be empty")
+
         return pwd_context.hash(password)
 
     @staticmethod
@@ -62,19 +76,20 @@ class PasswordHasher:
         """
         Verify a plain password against a stored Argon2 hash.
 
-        Args:
-            plain_password (str): The raw password provided by the user.
-            hashed_password (str): The stored Argon2 hash from the database.
-
-        Returns:
-            bool: True if the password matches, False otherwise.
-
-        Notes:
-            - Returns False if the hash is invalid or corrupted.
-            - UnknownHashError is caught to prevent crashes.
+        Returns False for:
+        - Invalid hashes
+        - Corrupted hashes
+        - Unsupported schemes
+        - Bad input types
         """
+        if not isinstance(plain_password, str) or not isinstance(hashed_password, str):
+            return False
+
+        if not plain_password or not hashed_password:
+            return False
+
         try:
             return pwd_context.verify(plain_password, hashed_password)
         except UnknownHashError:
-            # Hash is invalid or from an unsupported scheme
+            # Covers UnknownHashError, invalid/corrupt hashes, etc.
             return False

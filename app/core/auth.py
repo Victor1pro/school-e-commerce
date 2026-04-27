@@ -1,148 +1,141 @@
+# app/core/auth.py
 """
-Authentication Dependency Utilities.
+Authentication Dependency Utilities
+-----------------------------------
+Provides strict and optional authentication dependencies for FastAPI.
 
-This module provides strict and optional authentication dependencies
-used across the FastAPI application. It handles:
-
-- Extracting Bearer tokens from headers or cookies
-- Validating access tokens
-- Loading the authenticated user from the database
-- Supporting both strict (required) and soft (optional) authentication flows
+Features:
+- Extracts JWT tokens from Authorization header or cookies
+- Validates access tokens
+- Loads authenticated user from the database
+- Supports strict (required) and optional (soft) authentication flows
 """
 
 from fastapi import Request, HTTPException, status, Depends, Header
 from sqlalchemy.orm import Session
+
 from app.database import get_db
 from app.models.user_model import User
-from app.utils.jwt_handler import verify_access_token
+from app.utils.jwt_handler import verify_user_access_token
 
 
-# =========================================================
-# TOKEN EXTRACTION HELPER
-# =========================================================
+# ============================================================
+# TOKEN EXTRACTION
+# ============================================================
 def _extract_token(request: Request, authorization: str | None) -> str | None:
     """
-    Extracts a Bearer token from the incoming request.
-
-    Token lookup order:
+    Extract a Bearer token from:
         1. Authorization header (preferred)
         2. access_token cookie (fallback)
-
-    Args:
-        request (Request): Incoming FastAPI request object.
-        authorization (str | None): Raw Authorization header value.
-
-    Returns:
-        str | None: Extracted token string, or None if not found.
     """
 
-    # 1. Attempt to extract from Authorization header
+    # 1. Authorization header: "Bearer <token>"
     if authorization:
-        parts = authorization.split(" ")
-        # Expected format: "Bearer <token>"
-        if len(parts) == 2 and parts[0].lower() == "bearer":
-            return parts[1]
+        scheme, _, token = authorization.partition(" ")
+        if scheme.lower() == "bearer" and token:
+            return token.strip()
 
-    # 2. Fallback to cookie-based authentication
+    # 2. Cookie fallback
     return request.cookies.get("access_token")
 
 
-# =========================================================
-# STRICT AUTHENTICATION DEPENDENCY
-# =========================================================
+# ============================================================
+# USER LOADER
+# ============================================================
+def _load_user(db: Session, user_id: str) -> User | None:
+    """Fetch a user by ID, returning None if not found."""
+    return db.query(User).filter(User.id == user_id).first()
+
+
+# ============================================================
+# STRICT AUTHENTICATION (REQUIRED)
+# ============================================================
 def get_current_user(
     request: Request,
     authorization: str | None = Header(default=None, alias="Authorization"),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> User:
     """
     Strict authentication dependency.
 
     Requires:
-        - A valid access token (header or cookie)
-        - A valid user ID inside the token payload
+        - A valid access token
+        - A valid user ID inside the token
         - A matching user in the database
 
     Raises:
-        HTTPException: If token is missing, invalid, expired, or user not found.
-
-    Returns:
-        User: The authenticated SQLAlchemy User model instance.
+        HTTPException(401) if authentication fails.
     """
 
-    # Extract token from header or cookie
+    # Extract token
     token = _extract_token(request, authorization)
-
     if not token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Missing authentication token"
+            detail="Missing authentication token",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
-    # Validate token and decode payload
-    payload = verify_access_token(token)
-    if payload is None:
+    # Validate token
+    payload = verify_user_access_token(token)
+    if not payload:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or expired token"
+            detail="Invalid or expired token",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
-    # Extract user ID from token payload
+    # Extract user ID
     user_id = payload.get("sub")
     if not user_id:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token missing user ID"
+            detail="Token missing user ID",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
-    # Fetch user from database
-    user = db.query(User).filter(User.id == user_id).first()
+    # Load user
+    user = _load_user(db, user_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found"
+            detail="User not found",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
     return user
 
 
-# =========================================================
-# OPTIONAL AUTHENTICATION DEPENDENCY
-# =========================================================
+# ============================================================
+# OPTIONAL AUTHENTICATION (SOFT)
+# ============================================================
 def optional_user(
     request: Request,
     authorization: str | None = Header(default=None, alias="Authorization"),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ) -> User | None:
     """
-    Soft authentication dependency.
+    Optional authentication dependency.
 
     Behaves like get_current_user, but:
-        - Never raises an HTTPException
+        - Never raises an exception
         - Returns None if authentication fails
 
     Useful for:
-        - Public endpoints that behave differently when a user is logged in
-        - Optional personalization features
-
-    Returns:
-        User | None: Authenticated user or None if not authenticated.
+        - Public endpoints with optional personalization
+        - Pages that behave differently when logged in
     """
 
-    # Extract token (header or cookie)
     token = _extract_token(request, authorization)
     if not token:
         return None
 
-    # Validate token
-    payload = verify_access_token(token)
+    payload = verify_user_access_token(token)
     if not payload:
         return None
 
-    # Extract user ID
     user_id = payload.get("sub")
     if not user_id:
         return None
 
-    # Return user if found, otherwise None
-    return db.query(User).filter(User.id == user_id).first()
+    return _load_user(db, user_id)

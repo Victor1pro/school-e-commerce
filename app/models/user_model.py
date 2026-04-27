@@ -1,12 +1,13 @@
 """
 User, Settings & Address Models
+==============================
 
 This module defines the SQLAlchemy ORM models for user accounts and
-their associated addresses in the e‑commerce system.
+their associated addresses and settings in the e-commerce system.
 
 These models support:
 - Authentication (email + hashed password)
-- User roles (customer, admin, etc.)
+- Role-based access control (customer)
 - User profile data
 - Address book for checkout
 - Persistent user settings (notifications, privacy, UI preferences)
@@ -22,11 +23,47 @@ UUIDs are used for all primary keys to ensure global uniqueness.
 """
 
 import uuid
+from enum import Enum
 from datetime import datetime
+
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, Boolean, ForeignKey, TIMESTAMP, Integer
+from sqlalchemy import (
+    String,
+    Boolean,
+    ForeignKey,
+    TIMESTAMP,
+    Integer,
+    Index,
+    CheckConstraint,
+)
 from sqlalchemy.sql import func
+from sqlalchemy import Enum as SQLEnum
+
 from app.database import Base
+
+
+# ============================================================
+# USER ROLE ENUM
+# ============================================================
+class UserRole(str, Enum):
+    """
+    Enumerates allowed user roles.
+
+    Currently restricted to customers only.
+    This design allows future expansion (e.g. vendor, moderator).
+    """
+    CUSTOMER = "customer"
+
+
+# ============================================================
+# ADDRESS TYPE ENUM
+# ============================================================
+class AddressType(str, Enum):
+    """
+    Enumerates supported address types.
+    """
+    SHIPPING = "shipping"
+    BILLING = "billing"
 
 
 # ============================================================
@@ -40,86 +77,134 @@ class User(Base):
 
     Fields:
         id (str)              → UUID primary key
-        name (str)            → Full name of the user
-        email (str)           → Unique email address (used for login)
-        hashed_password (str) → Securely hashed password
-        is_active (bool)      → Whether the account is active
-        role (str)            → User role (e.g., "customer", "admin")
-        created_at            → Timestamp when created
-        updated_at            → Timestamp when last updated
+        name (str)            → Full name
+        email (str)           → Unique email (login identifier)
+        hashed_password (str) → Argon2-hashed password
+        is_active (bool)      → Account status
+        role (UserRole)       → Role-based access control
+        email_verified (bool) → Email verification state
+        last_login (datetime) → Last successful login timestamp
+        password_updated_at   → Used for token/session invalidation
+        created_at            → Creation timestamp
+        updated_at            → Last update timestamp
 
     Relationships:
-        addresses → List of saved addresses
-        orders    → List of orders placed by the user
-        carts     → List of carts (guest carts merge into user carts)
-        settings  → Persistent user settings (1:1)
+        addresses → Saved shipping/billing addresses
+        orders    → Orders placed by the user
+        carts     → Shopping carts
+        settings  → Persistent account settings (1:1)
     """
 
     __tablename__ = "users"
     __mapper_args__ = {"eager_defaults": True}
 
-    # Primary key (UUID stored as string)
+    # --------------------------------------------------------
+    # Primary Key
+    # --------------------------------------------------------
     id: Mapped[str] = mapped_column(
-        String(36), primary_key=True, default=lambda: str(uuid.uuid4())
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4()),
     )
 
-    # Basic user info
+    # --------------------------------------------------------
+    # Identity & Authentication
+    # --------------------------------------------------------
     name: Mapped[str] = mapped_column(String(100), nullable=False)
 
-    # Unique email for login
     email: Mapped[str] = mapped_column(
-        String(255), unique=True, index=True, nullable=False
+        String(255),
+        unique=True,
+        index=True,
+        nullable=False,
     )
 
-    # Hashed password (never store plain text)
-    hashed_password: Mapped[str] = mapped_column(String, nullable=False)
+    hashed_password: Mapped[str] = mapped_column(
+        String,
+        nullable=False,
+    )
 
-    # Account status
+    # --------------------------------------------------------
+    # Account State
+    # --------------------------------------------------------
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
-    # Role-based access control
-    role: Mapped[str] = mapped_column(String(50), default="customer")
+    role: Mapped[UserRole] = mapped_column(
+        SQLEnum(UserRole, name="user_role"),
+        default=UserRole.CUSTOMER,
+        nullable=False,
+    )
 
+    email_verified: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    last_login: Mapped[datetime | None] = mapped_column(
+        TIMESTAMP(timezone=True),
+        nullable=True,
+    )
+
+    # --------------------------------------------------------
     # Timestamps
+    # --------------------------------------------------------
     created_at: Mapped[datetime] = mapped_column(
-        TIMESTAMP(timezone=True), server_default=func.now()
+        TIMESTAMP(timezone=True),
+        server_default=func.now(),
     )
 
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=func.now(),
-        onupdate=func.now()
+        onupdate=func.now(),
     )
 
-    # One user → many addresses
+    # Used for JWT/session invalidation after password change
+    password_updated_at: Mapped[datetime] = mapped_column(
+        TIMESTAMP(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
+
+    # --------------------------------------------------------
+    # Relationships
+    # --------------------------------------------------------
     addresses: Mapped[list["Address"]] = relationship(
         "Address",
         back_populates="user",
         cascade="all, delete-orphan",
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin",
     )
 
-    # One user → many orders
     orders: Mapped[list["Order"]] = relationship(
         "Order",
         back_populates="user",
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin",
     )
 
-    # One user → many carts
     carts: Mapped[list["Cart"]] = relationship(
         "Cart",
         back_populates="user",
-        passive_deletes=True
+        passive_deletes=True,
+        lazy="selectin",
     )
 
-    # One user → one settings row
     settings: Mapped["UserSettings"] = relationship(
         "UserSettings",
         back_populates="user",
         uselist=False,
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
+        lazy="selectin",
     )
+
+    # --------------------------------------------------------
+    # Indexes
+    # --------------------------------------------------------
+    __table_args__ = (
+        Index("ix_users_email_active", "email", "is_active"),
+    )
+
+    def __repr__(self) -> str:
+        return f"<User email={self.email}>"
 
 
 
@@ -130,64 +215,71 @@ class Address(Base):
     """
     Address Model
 
-    Represents a saved address for a user.
+    Represents a saved shipping or billing address.
 
-    Fields:
-        id (str)          → UUID primary key
-        user_id (str)     → Foreign key to User
-        line1 (str)       → Primary address line
-        line2 (str|None)  → Optional secondary line
-        city (str)        → City name
-        postal_code (str) → Postal/ZIP code
-        country (str)     → Country name
-        phone (str|None)  → Optional phone number
-        created_at        → Timestamp when created
-        updated_at        → Timestamp when last updated
-
-    Relationships:
-        user → The user who owns this address
+    Ensures:
+        - Each user can have only one default address
+        - Addresses are deleted automatically when user is deleted
     """
 
     __tablename__ = "addresses"
     __mapper_args__ = {"eager_defaults": True}
 
-    # Primary key (UUID stored as string)
     id: Mapped[str] = mapped_column(
-        String(36), primary_key=True, default=lambda: str(uuid.uuid4())
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4()),
     )
 
-    # Foreign key → User
     user_id: Mapped[str] = mapped_column(
         String(36),
         ForeignKey("users.id", ondelete="CASCADE"),
-        index=True
+        index=True,
+        nullable=False,
     )
 
-    # Address fields
     line1: Mapped[str] = mapped_column(String(255), nullable=False)
-    line2: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    line2: Mapped[str | None] = mapped_column(String(255))
 
     city: Mapped[str] = mapped_column(String(100), nullable=False)
     postal_code: Mapped[str] = mapped_column(String(20), nullable=False)
     country: Mapped[str] = mapped_column(String(100), nullable=False)
 
-    # Optional phone number
-    phone: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    phone: Mapped[str | None] = mapped_column(String(20))
 
-    # Timestamps
+    address_type: Mapped[AddressType] = mapped_column(
+        SQLEnum(AddressType, name="address_type"),
+        default=AddressType.SHIPPING,
+        nullable=False,
+    )
+
+    is_default: Mapped[bool] = mapped_column(Boolean, default=False)
+
     created_at: Mapped[datetime] = mapped_column(
-        TIMESTAMP(timezone=True), server_default=func.now()
+        TIMESTAMP(timezone=True),
+        server_default=func.now(),
     )
 
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True),
         server_default=func.now(),
-        onupdate=func.now()
+        onupdate=func.now(),
     )
 
-    # Relationship back to User
-    user: Mapped["User"] = relationship("User", back_populates="addresses")
+    user: Mapped["User"] = relationship(
+        "User",
+        back_populates="addresses",
+    )
 
+    __table_args__ = (
+        # Enforce only one default address per user
+        Index(
+            "ix_user_default_address",
+            "user_id",
+            unique=True,
+            postgresql_where=(is_default.is_(True)),
+        ),
+    )
 
 
 # ============================================================
@@ -197,32 +289,18 @@ class UserSettings(Base):
     """
     UserSettings Model
 
-    Stores persistent, account-level settings for each user.
-    This includes notification preferences, privacy settings,
-    and optional UI preferences that should sync across devices.
+    Stores persistent, account-level preferences.
 
-    Fields:
-        user_id (str)          → Primary key + FK to User
-        email_notifications    → Receive email alerts
-        order_updates          → Receive order status updates
-        marketing_emails       → Receive promotional emails
-        two_factor_enabled     → Whether 2FA is enabled
-        privacy_tracking       → Allow personalized tracking
-        preferred_theme        → "light", "dark", or "system"
-        text_size              → UI text scaling percentage
-
-    Relationship:
-        user → The user who owns these settings (1:1)
+    This table is strictly 1:1 with User.
     """
 
     __tablename__ = "user_settings"
     __mapper_args__ = {"eager_defaults": True}
 
-    # Primary key is also the foreign key to User.id
     user_id: Mapped[str] = mapped_column(
         String(36),
         ForeignKey("users.id", ondelete="CASCADE"),
-        primary_key=True
+        primary_key=True,
     )
 
     # Notification preferences
@@ -234,9 +312,21 @@ class UserSettings(Base):
     two_factor_enabled: Mapped[bool] = mapped_column(Boolean, default=False)
     privacy_tracking: Mapped[bool] = mapped_column(Boolean, default=False)
 
-    # Optional UI preferences synced across devices
+    # UI & localization
     preferred_theme: Mapped[str] = mapped_column(String(20), default="system")
     text_size: Mapped[int] = mapped_column(Integer, default=100)
+    language: Mapped[str] = mapped_column(String(10), default="en")
+    currency: Mapped[str] = mapped_column(String(10), default="GBP")
+    timezone: Mapped[str] = mapped_column(String(50), default="Europe/London")
 
-    # Relationship back to User
-    user: Mapped["User"] = relationship("User", back_populates="settings")
+    user: Mapped["User"] = relationship(
+        "User",
+        back_populates="settings",
+    )
+
+    __table_args__ = (
+        CheckConstraint(
+            "text_size BETWEEN 75 AND 150",
+            name="ck_user_settings_text_size",
+        ),
+    )

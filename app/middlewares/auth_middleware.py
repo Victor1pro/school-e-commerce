@@ -15,9 +15,9 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.utils.jwt_handler import (
-    verify_access_token,
-    verify_refresh_token,
-    create_access_token
+    verify_user_access_token,
+    verify_user_refresh_token,
+    create_user_access_token
 )
 
 from app.database import get_db
@@ -161,7 +161,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
             refresh_token = request.cookies.get("refresh_token")
 
             # Validate access token
-            payload = verify_access_token(access_token) if access_token else None
+            payload = verify_user_access_token(access_token) if access_token else None
 
             if payload:
                 user = self._load_user(payload.get("sub"))
@@ -171,10 +171,10 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
             # Silent refresh
             if refresh_token:
-                refresh_payload = verify_refresh_token(refresh_token)
+                refresh_payload = verify_user_refresh_token(refresh_token)
                 if refresh_payload:
                     user_id = refresh_payload.get("sub")
-                    new_access = create_access_token(user_id)
+                    new_access = create_user_access_token(user_id)
                     user = self._load_user(user_id)
 
                     if user:
@@ -203,7 +203,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
         access_token = extract_token(request)
         refresh_token = request.cookies.get("refresh_token")
 
-        payload = verify_access_token(access_token) if access_token else None
+        payload = verify_user_access_token(access_token) if access_token else None
 
         if payload:
             user = self._load_user(payload.get("sub"))
@@ -213,10 +213,10 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
         # Silent refresh for API
         if refresh_token:
-            refresh_payload = verify_refresh_token(refresh_token)
+            refresh_payload = verify_user_refresh_token(refresh_token)
             if refresh_payload:
                 user_id = refresh_payload.get("sub")
-                new_access = create_access_token(user_id)
+                new_access = create_user_access_token(user_id)
                 user = self._load_user(user_id)
 
                 if user:

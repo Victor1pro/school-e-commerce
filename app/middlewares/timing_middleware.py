@@ -1,17 +1,20 @@
 """
-Request Timing Middleware.
+Request Timing Middleware
+-------------------------
+Measures how long each request takes to process and attaches the
+duration to the response headers.
 
-This middleware measures how long each request takes to process and
-adds the duration to the response headers.
+Adds:
+    X-Process-Time: <duration_in_seconds>
 
-Key features:
-- High‑precision timing using time.perf_counter()
-- Adds `X-Process-Time` header to every response
-- Optional console logging in development mode
+Useful for:
+    - Performance monitoring
+    - Debugging slow endpoints
+    - Profiling API behaviour during development
 """
 
 import time
-from fastapi import Request
+from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from app.config.settings import settings
 
@@ -20,50 +23,31 @@ class TimingMiddleware(BaseHTTPMiddleware):
     """
     Middleware for measuring request processing time.
 
-    Adds a custom response header:
-        X-Process-Time: <duration_in_seconds>
-
-    Useful for:
-        - Performance monitoring
-        - Debugging slow endpoints
-        - Profiling API behaviour during development
+    Uses time.perf_counter() for high‑precision timing and optionally
+    logs timing information in development mode.
     """
 
-    async def dispatch(self, request: Request, call_next):
-        """
-        Middleware entry point.
-
-        Measures the time taken to process the request and attaches
-        the duration to the response headers.
-
-        Args:
-            request (Request): Incoming HTTP request.
-            call_next: Function that forwards the request to the next handler.
-
-        Returns:
-            Response: The final response with timing metadata.
-        """
-
+    async def dispatch(self, request: Request, call_next) -> Response:
         # Start high‑precision timer
-        start_time = time.perf_counter()
+        start = time.perf_counter()
 
-        # Process the request
+        # Process request
         response = await call_next(request)
 
         # Compute duration
-        duration = time.perf_counter() - start_time
-        duration_rounded = round(duration, 6)
+        duration = round(time.perf_counter() - start, 6)
 
-        # Add timing header to response
-        response.headers["X-Process-Time"] = str(duration_rounded)
+        # Add timing header
+        response.headers["X-Process-Time"] = str(duration)
 
-        # Optional logging in development mode
-        if settings.APP_ENVIRONMENT == "development":
+        # Optional logging (development only)
+        if settings.is_development():
             try:
-                print(
-                    f"[TIMING] {request.method} {request.url.path} "
-                    f"took {duration_rounded}s"
-                )
+                # Avoid leaking query params in logs
+                path = request.url.path
+                method = request.method
+
+                print(f"[TIMING] {method} {path} → {duration}s")
             except Exception:
                 # Logging must never break the request flow
                 pass

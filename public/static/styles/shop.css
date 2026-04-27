@@ -860,208 +860,201 @@ body {
    FILTER SIDEBAR — MOBILE FIRST (DEFAULT)
    Glassmorphic + Slide‑In Animation
 ============================================================ */
-
+/* ============================================================
+   FILTER SIDEBAR — MOBILE FIRST (Glassmorphic)
+============================================================ */
 .filter-sidebar {
-    width: 100%;
-    padding: var(--space-lg);
+  width: 100%;
+  padding: var(--space-lg);
 
-    /* Glassmorphism */
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(18px) saturate(180%);
-    -webkit-backdrop-filter: blur(18px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  background: var(--role-surface-card);
+  border: 1px solid var(--role-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
 
-    /* Slide‑in animation */
+  transform: translateX(-20px);
+  opacity: 0;
+  animation: sidebarSlideIn 0.6s ease forwards;
+
+  margin-bottom: var(--space-lg);
+}
+
+@keyframes sidebarSlideIn {
+  from {
     transform: translateX(-20px);
     opacity: 0;
-    animation: sidebarSlideIn 0.6s ease forwards;
-
-    margin-bottom: var(--space-lg);
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
-/* Slide‑in keyframes */
-@keyframes sidebarSlideIn {
-    from {
-        transform: translateX(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Hover lift (desktop only, but harmless on mobile) */
 .filter-sidebar:hover {
-    background: rgba(255, 255, 255, 0.65);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  background: var(--role-surface-muted);
+  box-shadow: var(--shadow-medium);
 }
 
 /* ============================================================
    FILTER GROUPS
 ============================================================ */
-
 .filter-group {
-    margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-lg);
 }
 
 .filter-sidebar h3 {
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-md);
-    font-weight: var(--weight-bold);
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-md);
+  font-weight: var(--weight-bold);
 }
 
 .filter-group h4 {
-    font-size: var(--text-lg);
-    margin-bottom: var(--space-sm);
-    font-weight: var(--weight-semibold);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-sm);
+  font-weight: var(--weight-semibold);
 }
 
 /* ============================================================
    SWITCH ROWS (Glassmorphic Switches)
 ============================================================ */
-
 .switch-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
 }
 
 .switch-row input {
-    display: none;
+  display: none;
 }
 
-/* Switch track */
 .switch-row .switch {
-    width: 42px;
-    height: 22px;
-    border-radius: 22px;
-    position: relative;
-    cursor: pointer;
+  width: 42px;
+  height: 22px;
+  border-radius: 22px;
+  position: relative;
+  cursor: pointer;
 
-    /* Glass track */
-    background: rgba(255, 255, 255, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+  background: var(--role-surface-muted);
+  border: 1px solid var(--role-border-default);
 
-    transition: var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
-/* Switch knob */
 .switch-row .switch::after {
-    content: "";
-    width: 18px;
-    height: 18px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    transition: var(--transition-smooth);
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: var(--role-surface-card);
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: var(--transition-smooth);
 }
 
-/* Checked state */
 .switch-row input:checked + .switch {
-    background: var(--color-primary);
-    border-color: var(--color-primary-600);
+  background: var(--color-primary);
+  border-color: var(--color-primary-600);
 }
 
 .switch-row input:checked + .switch::after {
-    transform: translateX(20px);
+  transform: translateX(20px);
 }
+
 
 /* ============================================================
-   DARK MODE
+   DARK MODE — FILTER SIDEBAR
 ============================================================ */
-
 @media (prefers-color-scheme: dark) {
-    .filter-sidebar {
-        background: rgba(20, 20, 20, 0.55);
-        border-color: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-    }
+  .filter-sidebar {
+    background: var(--role-surface-card);
+    border-color: var(--role-border-default);
+    box-shadow: var(--shadow-soft);
+  }
 
-    .filter-sidebar:hover {
-        background: rgba(30, 30, 30, 0.55);
-        box-shadow: 0 16px 40px rgba(0,0,0,0.45);
-    }
+  .filter-sidebar:hover {
+    background: var(--role-surface-muted);
+    box-shadow: var(--shadow-medium);
+  }
 
-    .switch-row .switch {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.15);
-    }
+  .switch-row .switch {
+    background: var(--role-surface-muted);
+    border-color: var(--role-border-default);
+  }
 
-    .switch-row .switch::after {
-        background: rgba(255, 255, 255, 0.85);
-    }
+  .switch-row .switch::after {
+    background: var(--role-surface-card);
+  }
 }
+
+/* ============================
+   RESPONSIVE SIDEBAR WIDTH
+============================ */
+
 
 /* ============================================================
    TABLET (≥ 768px)
 ============================================================ */
-
 @media (min-width: 768px) {
-    .filter-sidebar {
-        width: 280px;
-        padding: var(--space-lg);
-        margin-bottom: 0;
-    }
+  .filter-sidebar {
+    width: 280px;
+    margin-bottom: 0;
+  }
 }
 
 /* ============================================================
    DESKTOP (≥ 1024px)
 ============================================================ */
-
 @media (min-width: 1024px) {
-    .filter-sidebar {
-        width: 300px;
-        position: sticky;
-        top: 120px; /* stays visible while scrolling */
-        height: fit-content;
-    }
+  .filter-sidebar {
+    width: 300px;
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+  }
 }
-
-
 
 /* ============================================================
    GLASSMORPHIC PRODUCT CARD
 ============================================================ */
 .product-card {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: var(--role-surface-card); /* Clean token background */
+  border: none; /* Remove checkout.css border */
   border-radius: var(--radius-lg);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-soft);
 
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
 
-  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+  transition: 
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
   cursor: pointer;
 }
 
 .product-card:hover {
+  background: var(--role-surface-muted);
+  box-shadow: var(--shadow-medium);
   transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.15);
-  background: rgba(255, 255, 255, 0.65);
 }
 
+/* ============================================================
+   DARK MODE — PRODUCT CARD
+============================================================ */
 @media (prefers-color-scheme: dark) {
   .product-card {
-    background: rgba(20, 20, 20, 0.55);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: var(--role-surface-card);
+    border: none;
+    box-shadow: var(--shadow-soft);
   }
 
   .product-card:hover {
-    background: rgba(30, 30, 30, 0.55);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    background: var(--role-surface-muted);
+    box-shadow: var(--shadow-medium);
   }
 }
 
@@ -1074,7 +1067,7 @@ body {
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: var(--radius-md);
-  background: var(--color-surface-200);
+  background: var(--role-surface-muted);
   position: relative;
 }
 
@@ -1126,6 +1119,9 @@ body {
 /* ============================================================
    ADD TO CART BUTTON (Matches checkout primary button)
 ============================================================ */
+/* ============================================================
+   ADD TO CART BUTTON
+============================================================ */
 .product-actions {
   margin-top: auto;
 }
@@ -1151,7 +1147,7 @@ body {
 }
 
 .add-to-cart-btn:hover {
-  background: var(--color-primary-dark);
+  background: var(--color-primary-light);
 }
 
 .add-to-cart-btn.added {

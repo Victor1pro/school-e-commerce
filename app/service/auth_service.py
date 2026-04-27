@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response
 from app.models.user_model import User
 from app.utils.hashing import PasswordHasher
-from app.utils.jwt_handler import create_access_token, create_refresh_token, verify_refresh_token
+from app.utils.jwt_handler import create_user_access_token, verify_user_refresh_token, create_user_refresh_token
 from app.service.cart_service import merge_guest_cart
 
 
@@ -125,8 +125,8 @@ def login_user_service(
     )
 
     # 5. Create tokens
-    access_token = create_access_token(str(user.id))
-    refresh_token = create_refresh_token(str(user.id))
+    access_token = create_user_access_token(str(user.id))
+    refresh_token = create_user_refresh_token(str(user.id))
 
     # 6. Set cookies
     response.set_cookie(
@@ -196,7 +196,7 @@ def refresh_access_token_service(refresh_token: str | None, response: Response):
             detail="Missing refresh token"
         )
 
-    payload = verify_refresh_token(refresh_token)
+    payload = verify_user_refresh_token(refresh_token)
     if not payload:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -206,7 +206,7 @@ def refresh_access_token_service(refresh_token: str | None, response: Response):
     user_id = payload.get("sub")
 
     # Create new access token
-    new_access_token = create_access_token(user_id)
+    new_access_token = create_user_access_token(user_id)
 
     # Update access token cookie
     response.set_cookie(

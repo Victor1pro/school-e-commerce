@@ -11,8 +11,11 @@ Responsibilities:
 - Expose a FastAPI dependency (`get_db`) that ensures safe session handling
 """
 
+from typing import Generator
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session
+from sqlalchemy.pool import NullPool
+
 from app.config.settings import settings
 
 
@@ -32,22 +35,24 @@ class Base(DeclarativeBase):
 # =========================================================
 # DATABASE ENGINE
 # =========================================================
-# SQLite requires special connection arguments when used with FastAPI
 if settings.APP_DATABASE_URL.startswith("sqlite"):
+    # SQLite (no connection pooling)
     engine = create_engine(
         settings.APP_DATABASE_URL,
-        connect_args={"check_same_thread": False},  # Needed for SQLite threading
-        future=True,                                # Use SQLAlchemy 2.0 style
-        echo=False,                                 # Disable SQL logging
-        pool_pre_ping=True                          # Detect stale connections
-    )
-else:
-    # For PostgreSQL, MySQL, MariaDB, etc.
-    engine = create_engine(
-        settings.APP_DATABASE_URL,
+        connect_args={"check_same_thread": False},
+        poolclass=NullPool,
         future=True,
         echo=False,
-        pool_pre_ping=True
+    )
+else:
+    # PostgreSQL / MySQL / MariaDB
+    engine = create_engine(
+        settings.APP_DATABASE_URL,
+        pool_size=5,
+        max_overflow=10,
+        pool_pre_ping=True,
+        future=True,
+        echo=False,
     )
 
 
@@ -55,17 +60,17 @@ else:
 # SESSION FACTORY
 # =========================================================
 SessionLocal = sessionmaker(
-    autocommit=False,          # Manual commit control
-    autoflush=False,           # Prevent automatic flushes
-    expire_on_commit=False,    # Keep objects usable after commit (important for FastAPI)
-    bind=engine
+    autocommit=False,
+    autoflush=False,
+    expire_on_commit=False,
+    bind=engine,
 )
 
 
 # =========================================================
 # FASTAPI DEPENDENCY
 # =========================================================
-def get_db():
+def get_db() -> Generator[Session, None, None]:
     """
     FastAPI dependency that provides a database session.
 

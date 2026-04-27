@@ -1,127 +1,100 @@
 """
-JWT Creation and Verification Utilities.
+JWT Creation and Verification Utilities
+=======================================
 
-This module handles:
-- Creating signed JWT access and refresh tokens
-- Embedding standard JWT claims (sub, iat, nbf, exp)
-- Verifying and decoding tokens
-- Handling expiration and invalid token errors
-
-It uses python-jose for cryptographic signing and decoding.
+Supports:
+- User & Admin JWT separation
+- Access & Refresh tokens
+- Token type enforcement
+- JWT ID (jti) for future Redis revocation
+- Strict verification with safe failure behavior
 """
 
 from datetime import datetime, timedelta, timezone
+from uuid import uuid4
+
 from jose import jwt, JWTError, ExpiredSignatureError
+
 from app.config.settings import settings
 
 
 # =========================================================
-# TOKEN CREATION (GENERIC)
+# INTERNAL HELPERS
 # =========================================================
-def create_token(data: dict, expires_delta: timedelta, secret_key: str) -> str:
+def _utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _base_claims(
+    *,
+    subject_id: str,
+    subject_type: str,
+    token_type: str,
+    expires_delta: timedelta,
+) -> dict:
     """
-    Create a signed JWT token with standard claims.
+    Create standard JWT claims.
 
-    Args:
-        data (dict): Payload data. Must include "sub" (subject/user ID).
-        expires_delta (timedelta): Token lifetime.
-        secret_key (str): Secret key used to sign the token.
-
-    Standard Claims Added:
-        - sub: User ID
-        - iat: Issued at (UTC)
-        - nbf: Not valid before (UTC)
-        - exp: Expiration time (UTC)
-
-    Returns:
-        str: Encoded JWT token.
+    subject_type: "user" | "admin"
+    token_type: "access" | "refresh"
     """
 
-    now = datetime.now(timezone.utc)
+    if not subject_id:
+        raise ValueError("subject_id is required")
 
-    # Base claims required for all tokens
-    to_encode = {
-        "sub": data["sub"],
-        "iat": now,
-        "nbf": now,
-        "exp": now + expires_delta,
+    now = _utc_now()
+    issued_at = int(now.timestamp())
+    expires_at = issued_at + int(expires_delta.total_seconds())
+
+    return {
+        "sub": subject_id,
+        "sub_type": subject_type,   # user | admin
+        "typ": token_type,          # access | refresh
+        "jti": str(uuid4()),        # for Redis revocation later
+        "iat": issued_at,
+        "nbf": issued_at,
+        "exp": expires_at,
     }
 
-    # Add any additional custom claims
-    for key, value in data.items():
-        if key != "sub":
-            to_encode[key] = value
 
+def _encode_token(payload: dict, secret_key: str) -> str:
     return jwt.encode(
-        to_encode,
+        payload,
         secret_key,
-        algorithm=settings.APP_ALGORITHM
+        algorithm=settings.APP_JWT_ALGORITHM,
     )
 
 
-# =========================================================
-# ACCESS TOKEN CREATION
-# =========================================================
-def create_access_token(user_id: str) -> str:
+def _decode_token(
+    token: str,
+    secret_key: str,
+    expected_type: str,
+    expected_subject: str,
+) -> dict | None:
     """
-    Create a short‑lived access token.
+    Shared verification logic.
 
-    Args:
-        user_id (str): The authenticated user's ID.
-
-    Returns:
-        str: Signed JWT access token.
+    Returns decoded payload or None on failure.
     """
-    return create_token(
-        data={"sub": user_id},
-        expires_delta=timedelta(minutes=settings.APP_ACCESS_TOKEN_EXPIRE_MINUTES),
-        secret_key=settings.APP_ACCESS_TOKEN_SECRET_KEY
-    )
 
+    if not token:
+        return None
 
-# =========================================================
-# REFRESH TOKEN CREATION
-# =========================================================
-def create_refresh_token(user_id: str) -> str:
-    """
-    Create a long‑lived refresh token.
-
-    Args:
-        user_id (str): The authenticated user's ID.
-
-    Returns:
-        str: Signed JWT refresh token.
-    """
-    return create_token(
-        data={"sub": user_id},
-        expires_delta=timedelta(days=settings.APP_REFRESH_TOKEN_EXPIRE_DAYS),
-        secret_key=settings.APP_REFRESH_TOKEN_SECRET_KEY
-    )
-
-
-# =========================================================
-# ACCESS TOKEN VERIFICATION
-# =========================================================
-def verify_access_token(token: str) -> dict | None:
-    """
-    Verify and decode an access token.
-
-    Args:
-        token (str): JWT access token.
-
-    Returns:
-        dict | None: Decoded payload if valid, otherwise None.
-
-    Notes:
-        - Returns None if token is expired.
-        - Returns None if token signature is invalid.
-    """
     try:
-        return jwt.decode(
+        payload = jwt.decode(
             token,
-            settings.APP_ACCESS_TOKEN_SECRET_KEY,
-            algorithms=[settings.APP_ALGORITHM]
+            secret_key,
+            algorithms=[settings.APP_JWT_ALGORITHM],
         )
+
+        if payload.get("typ") != expected_type:
+            return None
+
+        if payload.get("sub_type") != expected_subject:
+            return None
+
+        return payload
+
     except ExpiredSignatureError:
         return None
     except JWTError:
@@ -129,29 +102,114 @@ def verify_access_token(token: str) -> dict | None:
 
 
 # =========================================================
-# REFRESH TOKEN VERIFICATION
+# USER TOKEN CREATION
 # =========================================================
-def verify_refresh_token(token: str) -> dict | None:
-    """
-    Verify and decode a refresh token.
+def create_user_access_token(user_id: str) -> str:
+    payload = _base_claims(
+        subject_id=user_id,
+        subject_type="user",
+        token_type="access",
+        expires_delta=timedelta(
+            minutes=settings.APP_USER_ACCESS_TOKEN_EXPIRE_MINUTES
+        ),
+    )
 
-    Args:
-        token (str): JWT refresh token.
+    return _encode_token(
+        payload,
+        settings.APP_USER_ACCESS_TOKEN_SECRET_KEY,
+    )
 
-    Returns:
-        dict | None: Decoded payload if valid, otherwise None.
 
-    Notes:
-        - Refresh tokens use a different secret key.
-        - Returns None for expired or invalid tokens.
-    """
-    try:
-        return jwt.decode(
-            token,
-            settings.APP_REFRESH_TOKEN_SECRET_KEY,
-            algorithms=[settings.APP_ALGORITHM]
-        )
-    except ExpiredSignatureError:
-        return None
-    except JWTError:
-        return None
+def create_user_refresh_token(user_id: str) -> str:
+    payload = _base_claims(
+        subject_id=user_id,
+        subject_type="user",
+        token_type="refresh",
+        expires_delta=timedelta(
+            days=settings.APP_USER_REFRESH_TOKEN_EXPIRE_DAYS
+        ),
+    )
+
+    return _encode_token(
+        payload,
+        settings.APP_USER_REFRESH_TOKEN_SECRET_KEY,
+    )
+
+
+# =========================================================
+# ADMIN TOKEN CREATION
+# =========================================================
+def create_admin_access_token(admin_id: str, role: str) -> str:
+    payload = _base_claims(
+        subject_id=admin_id,
+        subject_type="admin",
+        token_type="access",
+        expires_delta=timedelta(
+            minutes=settings.APP_ADMIN_ACCESS_TOKEN_EXPIRE_MINUTES
+        ),
+    )
+
+    payload["role"] = role  # embed role for quick checks
+
+    return _encode_token(
+        payload,
+        settings.APP_ADMIN_ACCESS_TOKEN_SECRET_KEY,
+    )
+
+
+def create_admin_refresh_token(admin_id: str) -> str:
+    payload = _base_claims(
+        subject_id=admin_id,
+        subject_type="admin",
+        token_type="refresh",
+        expires_delta=timedelta(
+            days=settings.APP_ADMIN_REFRESH_TOKEN_EXPIRE_DAYS
+        ),
+    )
+
+    return _encode_token(
+        payload,
+        settings.APP_ADMIN_REFRESH_TOKEN_SECRET_KEY,
+    )
+
+
+# =========================================================
+# USER TOKEN VERIFICATION
+# =========================================================
+def verify_user_access_token(token: str) -> dict | None:
+    return _decode_token(
+        token=token,
+        secret_key=settings.APP_USER_ACCESS_TOKEN_SECRET_KEY,
+        expected_type="access",
+        expected_subject="user",
+    )
+
+
+def verify_user_refresh_token(token: str) -> dict | None:
+    return _decode_token(
+        token=token,
+        secret_key=settings.APP_USER_REFRESH_TOKEN_SECRET_KEY,
+        expected_type="refresh",
+        expected_subject="user",
+    )
+
+
+# =========================================================
+# ADMIN TOKEN VERIFICATION
+# =========================================================
+def verify_admin_access_token(token: str) -> dict | None:
+    return _decode_token(
+        token=token,
+        secret_key=settings.APP_ADMIN_ACCESS_TOKEN_SECRET_KEY,
+        expected_type="access",
+        expected_subject="admin",
+    )
+
+
+def verify_admin_refresh_token(token: str) -> dict | None:
+    return _decode_token(
+        token=token,
+        secret_key=settings.APP_ADMIN_REFRESH_TOKEN_SECRET_KEY,
+        expected_type="refresh",
+        expected_subject="admin",
+    )

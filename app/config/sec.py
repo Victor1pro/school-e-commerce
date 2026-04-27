@@ -1,4 +1,11 @@
 # app/config/sec.py
+"""
+Security Utility: Token Key Generator
+-------------------------------------
+Used to generate cryptographically secure ACCESS and REFRESH token keys.
+Run this file manually when setting up a new environment.
+"""
+
 import secrets
 
 def generate_token_keys():

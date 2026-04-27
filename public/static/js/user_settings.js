@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =========================================================
        THEME MODE (light / dark)
-       Stored as: "light" | "dark"
     ========================================================== */
     const themeToggle = document.getElementById("themeToggle");
 
@@ -29,16 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
         document.documentElement.setAttribute("data-theme", theme);
     };
 
-    // Load saved theme (default = light)
-    const savedTheme = loadSetting("themeMode", "light");
-    themeToggle.checked = (savedTheme === "dark");
-    applyTheme(savedTheme);
+    if (themeToggle) {
+        const savedTheme = loadSetting("themeMode", "light");
+        themeToggle.checked = (savedTheme === "dark");
+        applyTheme(savedTheme);
 
-    themeToggle.addEventListener("change", () => {
-        const newTheme = themeToggle.checked ? "dark" : "light";
-        saveSetting("themeMode", newTheme);
-        applyTheme(newTheme);
-    });
+        themeToggle.addEventListener("change", () => {
+            const newTheme = themeToggle.checked ? "dark" : "light";
+            saveSetting("themeMode", newTheme);
+            applyTheme(newTheme);
+        });
+    }
 
 
     /* =========================================================
@@ -50,14 +50,16 @@ document.addEventListener("DOMContentLoaded", () => {
         document.documentElement.classList.toggle("high-contrast", enabled);
     };
 
-    const savedContrast = loadSetting("highContrast", false);
-    contrastToggle.checked = savedContrast;
-    applyContrast(savedContrast);
+    if (contrastToggle) {
+        const savedContrast = loadSetting("highContrast", false);
+        contrastToggle.checked = savedContrast;
+        applyContrast(savedContrast);
 
-    contrastToggle.addEventListener("change", () => {
-        saveSetting("highContrast", contrastToggle.checked);
-        applyContrast(contrastToggle.checked);
-    });
+        contrastToggle.addEventListener("change", () => {
+            saveSetting("highContrast", contrastToggle.checked);
+            applyContrast(contrastToggle.checked);
+        });
+    }
 
 
     /* =========================================================
@@ -68,48 +70,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const applyTextSize = (size) => {
         document.documentElement.style.fontSize = `${size}%`;
-        textPreview.style.fontSize = `${size}%`;
+        if (textPreview) textPreview.style.fontSize = `${size}%`;
     };
 
-    const savedTextSize = loadSetting("textSize", 100);
-    textSizeRange.value = savedTextSize;
-    applyTextSize(savedTextSize);
+    if (textSizeRange) {
+        const savedTextSize = loadSetting("textSize", 100);
+        textSizeRange.value = savedTextSize;
+        applyTextSize(savedTextSize);
 
-    textSizeRange.addEventListener("input", () => {
-        const size = textSizeRange.value;
-        saveSetting("textSize", size);
-        applyTextSize(size);
-    });
+        textSizeRange.addEventListener("input", () => {
+            const size = textSizeRange.value;
+            saveSetting("textSize", size);
+            applyTextSize(size);
+        });
+    }
 
 
     /* =========================================================
-       NOTIFICATIONS (frontend only)
+       NOTIFICATIONS
     ========================================================== */
     const notificationToggle = document.getElementById("notificationToggle");
 
-    const savedNotifications = loadSetting("notificationsEnabled", false);
-    notificationToggle.checked = savedNotifications;
+    if (notificationToggle) {
+        const savedNotifications = loadSetting("notificationsEnabled", false);
+        notificationToggle.checked = savedNotifications;
 
-    notificationToggle.addEventListener("change", () => {
-        saveSetting("notificationsEnabled", notificationToggle.checked);
-    });
+        notificationToggle.addEventListener("change", () => {
+            saveSetting("notificationsEnabled", notificationToggle.checked);
+        });
+    }
 
 
     /* =========================================================
-       EMAIL ALERTS (frontend only)
+       EMAIL ALERTS
     ========================================================== */
     const emailToggle = document.getElementById("emailToggle");
 
-    const savedEmailAlerts = loadSetting("emailAlerts", false);
-    emailToggle.checked = savedEmailAlerts;
+    if (emailToggle) {
+        const savedEmailAlerts = loadSetting("emailAlerts", false);
+        emailToggle.checked = savedEmailAlerts;
 
-    emailToggle.addEventListener("change", () => {
-        saveSetting("emailAlerts", emailToggle.checked);
-    });
+        emailToggle.addEventListener("change", () => {
+            saveSetting("emailAlerts", emailToggle.checked);
+        });
+    }
 
 
     /* =========================================================
-       DEVICE PERMISSIONS (local only)
+       DEVICE PERMISSIONS
     ========================================================== */
     const deviceToggles = {
         locationToggle: "deviceLocation",
@@ -119,6 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     Object.entries(deviceToggles).forEach(([id, key]) => {
         const el = document.getElementById(id);
+        if (!el) return;
+
         const saved = loadSetting(key, false);
         el.checked = saved;
 
